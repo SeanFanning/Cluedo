@@ -1,4 +1,5 @@
 package game;
 
-public class Card {
+public interface Card {
+    String getType();
 }
