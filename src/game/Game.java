@@ -52,7 +52,7 @@ public class Game {
 
         for (int x = 0; x < dice_num; x++){
             String direction = scanner.nextLine();
-            switch (direction)  {
+            switch (direction.toUpperCase())  {
                 case "N":   System.out.println("You moved North");
                             break;
                 case "E":   System.out.println("You moved East");

@@ -1,6 +1,8 @@
 package game.token;
 
-public class Weapon {
+import game.Card;
+
+public class Weapon implements Card {
     private int[] position = new int[2];
     private String name;
 
