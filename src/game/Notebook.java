@@ -16,10 +16,6 @@ public class Notebook {
         notes.add(n);
     }
 
-//    public List<String> read_notebook(){
-//        return notes;
-//    }
-
     public void read_notebook(){
         for(int i=0; i<notes.size(); i++){
             System.out.println(notes.get(i));
