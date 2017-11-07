@@ -67,6 +67,8 @@ public class Game {
             System.out.println("Choose where you would like to move to next: [N,E,S,W]");
         }
 
+        System.out.println("Out of moves");
+
     }
 
     public static int roll_dice()   {

@@ -2,18 +2,18 @@ package game.token;
 
 import game.Card;
 
-public class Weapon implements Card {
+public class WeaponPawn implements Card {
     private int[] position = new int[2];
     private String name;
 
-    public Weapon(int x, int y, String n){
+    public WeaponPawn(int x, int y, String n){
         position[0] = x;
         position[1] = y;
         name = n;
     }
 
     public String getType(){
-        return "Weapon";
+        return "Weapon Pawn";
     }
 
     public String getName(){
