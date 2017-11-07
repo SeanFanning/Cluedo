@@ -18,7 +18,6 @@ public enum Character implements Card{
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
     private List<Card> cards = new ArrayList<Card>();
-    protected Notebook notebook;
 
 
     public String getType() {
@@ -38,17 +37,5 @@ public enum Character implements Card{
         Collections.shuffle(characters);
 
         return characters;
-    }
-
-    public void addCard(Card card){
-        cards.add(card);
-    }
-
-    public List<Card> getCards(){
-        return cards;
-    }
-
-    public void initNotebook(String n){
-        notebook = new Notebook(n);
     }
 }

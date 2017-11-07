@@ -5,16 +5,17 @@ import java.util.*;
 public class Game {
 
     public static void main(String[] args){
-        int num_players = 6;
+        int num_players = 3;
         ArrayList<Character> characters = Character.shuffleCharacters(num_players);
 
         Card[] solution = new Card[3];
         solution = initSolution();
 
         Player[] players = initPlayers(num_players, characters);
-        players[3].notebook.add_note("Test note");
+        players[2].addNote("Test note");
         System.out.print("\n");
-        players[3].notebook.read_notebook();
+        players[2].readNotebook();
+
 
         move_character(3); /* 3 test move */
     }
@@ -24,10 +25,10 @@ public class Game {
 
         for(int x=0; x<num_players; x++)    {
             players[x] = new Player(characters.get(x).toString(), characters.get(x));
-            System.out.println("Player " + (x + 1) + " is: " + players[x].character);
+            System.out.println("Player " + (x + 1) + " is: " + players[x].getName());
 
-            players[x].initNotebook(players[x].character.toString());
-            players[x].notebook.add_note("Player " + (x + 1));
+            players[x].initNotebook(players[x].getName());
+            players[x].addNote("Player " + (x + 1));
         }
 
         return players;
