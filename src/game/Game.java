@@ -14,10 +14,17 @@ public class Game {
         Player[] players = initPlayers(num_players, characters);
         players[2].addNote("Test note");
         System.out.print("\n");
-        players[2].readNotebook();
+        printNotebook(players[2].getNotes());
 
 
         move_character(3); /* 3 test move */
+    }
+
+    private static void printNotebook(List<String> notes){
+        for(int i=0; i<notes.size(); i++){
+            System.out.println(notes.get(i));
+        }
+        System.out.println();
     }
 
     public static Player[] initPlayers(int num_players, ArrayList<Character> characters){

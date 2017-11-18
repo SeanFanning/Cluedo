@@ -18,10 +18,7 @@ public class Notebook {
         notes.add(n);
     }
 
-    // Function which prints each line in the notebook
-    public void read_notebook(){
-        for(int i=0; i<notes.size(); i++){
-            System.out.println(notes.get(i));
-        }
+    public List<String> getNotes(){
+        return notes;
     }
 }

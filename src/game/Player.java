@@ -29,8 +29,8 @@ public class Player {
         notebook.add_note(s);
     }
 
-    public void readNotebook(){
-        notebook.read_notebook();
+    public List<String> getNotes(){
+        return notebook.getNotes();
     }
 
     public String getName(){
