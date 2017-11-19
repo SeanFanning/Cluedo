@@ -1,21 +1,26 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 import game.Notebook;
-import org.junit.jupiter.api.Test;
 
-class NotebookTest {
+public class NotebookTest {
+
+    private Notebook notebook;
+
+    @Before
+    public void setUp() throws Exception {
+        notebook = new Notebook("PROFESSOR_PLUM");
+    }
+
     @Test
-    void testNotebook() {
-
-        Notebook tester = new Notebook("PROFESSOR_PLUM");
-
+    public void testNotebook() {
         // assert statements
-        assertEquals(tester.getNotes().get(0), "PROFESSOR_PLUM\'s Notebook: ");
-        assertNotEquals(tester.getNotes().get(0), "PROFESSOR_PLUM\'s Notebook:");
-        tester.add_note("Test note in notebook");
-        assertEquals(tester.getNotes().get(1), "Test note in notebook");
+        assertEquals(notebook.getNotes().get(0), "PROFESSOR_PLUM\'s Notebook: ");
+        assertNotEquals(notebook.getNotes().get(0), "PROFESSOR_PLUM\'s Notebook:");
+        notebook.add_note("Test note in notebook");
+        assertEquals(notebook.getNotes().get(1), "Test note in notebook");
     }
 
 }

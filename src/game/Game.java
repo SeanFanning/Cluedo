@@ -1,12 +1,19 @@
 package game;
 
 import java.util.*;
+import board.Map;
 
 public class Game {
 
+    private static Map board = new Map();
+    private static ArrayList<Character> characters;
+
     public static void main(String[] args){
+
+        printMap();
+
         int num_players = 3;
-        ArrayList<Character> characters = Character.shuffleCharacters(num_players);
+        characters = Character.shuffleCharacters(num_players);
 
         Card[] solution = new Card[3];
         solution = initSolution();
@@ -25,6 +32,19 @@ public class Game {
             System.out.println(notes.get(i));
         }
         System.out.println();
+    }
+
+    // TODO: Tidy up the brackets
+    // TODO: Draw character locations on map
+    // Draw the map on the game screen
+    private static void printMap(){
+        char[][] map = board.getMap();
+
+        int n = map.length;
+
+        for(int i=0; i<n; i++) {
+            System.out.println(Arrays.toString(map[i]));
+        }
     }
 
     public static Player[] initPlayers(int num_players, ArrayList<Character> characters){
