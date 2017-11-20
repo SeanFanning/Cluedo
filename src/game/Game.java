@@ -98,8 +98,8 @@ public class Game {
 
     public static void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
-        /*Character player = character;*/
         int dice_num = roll_dice();
+        
         System.out.println("Player " + player.getName() + " (" + player.getIcon() + ") has rolled the dice!");
         System.out.println("The player has rolled a... " + dice_num + "!");
 
@@ -111,11 +111,11 @@ public class Game {
             printMap();
             Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
             System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
-            System.out.println("Choose where you would like to move to: [N,E,S,W]");
+            System.out.println("Choose where you would like to move to: [W,A,S,D]");
 
             String direction = scanner.nextLine();
             switch (direction.toUpperCase())  {
-                case "W":   if(board.canMove(x, y-1)){
+                case "A":   if(board.canMove(x, y-1)){
                                 System.out.println("You moved West");
                                 player.setPos(x, y-1);
                             }else{
@@ -124,7 +124,7 @@ public class Game {
                             }
                             break;
 
-                case "N":   if(board.canMove(x+1, y)){
+                case "W":   if(board.canMove(x+1, y)){
                                 System.out.println("You moved North");
                                 player.setPos(x+1, y);
                             }else{
@@ -142,7 +142,7 @@ public class Game {
                             }
                             break;
 
-                case "E":   if(board.canMove(x, y+1)){
+                case "D":   if(board.canMove(x, y+1)){
                                 System.out.println("You moved East");
                                 player.setPos(x, y+1);
                             }else{
@@ -162,8 +162,6 @@ public class Game {
     }
 
     public static int roll_dice()   {
-        //Random rand = new Random();
-        //int dice_num = rand.nextInt(12) + 2;
         int dice_num = (int)(Math.random() * 12 + 2);
         return dice_num;
     }
