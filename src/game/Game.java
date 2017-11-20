@@ -2,6 +2,7 @@ package game;
 
 import java.util.*;
 import board.Map;
+import game.token.Slot;
 
 public class Game {
 
@@ -108,7 +109,8 @@ public class Game {
             int y = coordinates[0];
 
             printMap();
-            System.out.println("You are at " + Arrays.toString(coordinates));
+            Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
+            System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
             System.out.println("Choose where you would like to move to: [N,E,S,W]");
 
             String direction = scanner.nextLine();

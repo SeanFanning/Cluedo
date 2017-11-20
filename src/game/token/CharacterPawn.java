@@ -2,7 +2,7 @@ package game.token;
 
 
 public class CharacterPawn{
-    //private int x, y;
+
     private int[] position = new int[2];
     public char icon;
 

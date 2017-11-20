@@ -2,6 +2,7 @@ package board;
 
 import game.Card;
 import game.Rooms;
+import game.token.Slot;
 
 public class Map {
     private char[][] map = new char[][]{
@@ -28,33 +29,38 @@ public class Map {
         return map;
     }
 
-    public Card getSlot(int x, int y){
+    public Slot getSlot(int x, int y){
         char c = map[x][y];
         Card card;
+        Slot slot;
 
         switch (c){
-            case 'K':   card = Rooms.KITCHEN;
+            case 'K':   slot = new Slot(Rooms.KITCHEN.toString());
                 break;
-            case 'B':   card = Rooms.BALLROOM;
+            case 'B':   slot = new Slot(Rooms.BALLROOM.toString());
                 break;
-            case 'C':   card = Rooms.CONSERVATORY;
+            case 'C':   slot = new Slot(Rooms.CONSERVATORY.toString());
                 break;
-            case 'L':   card = Rooms.LIBRARY;
+            case 'L':   slot = new Slot(Rooms.LIBRARY.toString());
                 break;
-            case 'l':   card = Rooms.LOUNGE;
+            case 'l':   slot = new Slot(Rooms.LOUNGE.toString());
                 break;
-            case 'b':   card = Rooms.BILLIARD_ROOM;
+            case 'b':   slot = new Slot(Rooms.BILLIARD_ROOM.toString());
                 break;
-            case 'D':   card = Rooms.DINING_ROOM;
+            case 'D':   slot = new Slot(Rooms.DINING_ROOM.toString());
                 break;
-            case 'S':   card = Rooms.STUDY;
+            case 'S':   slot = new Slot(Rooms.STUDY.toString());
                 break;
-            case 'H':   card = Rooms.HALL;
+            case 'H':   slot = new Slot(Rooms.HALL.toString());
                 break;
-            default:    return null;
+            case ' ':   slot = new Slot("Outside");
+                break;
+            case 'X':   slot = new Slot("Wall");
+                break;
+            default:    slot = new Slot("Error");
         }
 
-        return card;
+        return slot;
     }
 
     //TODO: DFS Search to get distance to destination, while moving around walls etc.
