@@ -43,8 +43,6 @@ public class Game {
     private static void printMap(){
 
         char[][] tmp_map = new char[map.length][];
-        //System.arraycopy(map, 0, tmp_map, 0, map.length);
-        //tmp_map = Arrays.copyOf(map, map.length);
         for(int i=0; i<map.length; i++){
             tmp_map[i] = map[i].clone();
         }
@@ -99,7 +97,7 @@ public class Game {
     public static void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
         int dice_num = roll_dice();
-        
+
         System.out.println("Player " + player.getName() + " (" + player.getIcon() + ") has rolled the dice!");
         System.out.println("The player has rolled a... " + dice_num + "!");
 
@@ -111,7 +109,7 @@ public class Game {
             printMap();
             Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
             System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
-            System.out.println("Choose where you would like to move to: [W,A,S,D]");
+            System.out.println("You have " + (dice_num-i) + " moves left: [W,A,S,D]");
 
             String direction = scanner.nextLine();
             switch (direction.toUpperCase())  {

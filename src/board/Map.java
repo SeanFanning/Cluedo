@@ -30,7 +30,7 @@ public class Map {
     }
 
     public Slot getSlot(int x, int y){
-        char c = map[x][y];
+        char c = map[y][x];
         Card card;
         Slot slot;
 
