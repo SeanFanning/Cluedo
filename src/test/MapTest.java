@@ -38,7 +38,7 @@ public class MapTest {
 
     @Test
     public void test_canMove(){
-        boolean a = board.canMove(0,0,1,2,4);
+        boolean a = board.canMove(1,1);
         assertEquals(a, true);
     }
 }

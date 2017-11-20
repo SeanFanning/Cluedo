@@ -1,29 +1,28 @@
 package game.token;
 
-import game.Card;
 
-public class CharacterPawn implements Card {
+public class CharacterPawn{
     //private int x, y;
     private int[] position = new int[2];
-    private String name;
+    public char icon;
 
-    public CharacterPawn(int x, int y, String n){
-        position[0] = x;
-        position[1] = y;
-        name = n;
+    public CharacterPawn(int x, int y, char i){
+        position[0] = y;
+        position[1] = x;
+        icon = i;
     }
 
     public String getType(){
         return "Character Pawn";
     }
 
-    public String getName(){
-        return name;
+    public char getIcon(){
+        return icon;
     }
 
     public void setPosition(int x, int y){
-        position[0] = x;
-        position[1] = y;
+        position[0] = y;
+        position[1] = x;
     }
 
     public int[] getPosition(){

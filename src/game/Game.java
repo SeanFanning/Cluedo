@@ -7,24 +7,26 @@ public class Game {
 
     private static Map board = new Map();
     private static ArrayList<Character> characters;
+    private static Player[] players;
+    private static int num_players;
+    private static char[][] map = board.getMap();;
+
 
     public static void main(String[] args){
 
-        printMap();
-
-        int num_players = 3;
+        num_players = 3;
         characters = Character.shuffleCharacters(num_players);
 
         Card[] solution = new Card[3];
         solution = initSolution();
 
-        Player[] players = initPlayers(num_players, characters);
+        players = initPlayers(num_players, characters);
         players[2].addNote("Test note");
         System.out.print("\n");
         printNotebook(players[2].getNotes());
 
 
-        move_character(3); /* 3 test move */
+        move_character(players[2]); /* 3 test move */
     }
 
     private static void printNotebook(List<String> notes){
@@ -36,22 +38,41 @@ public class Game {
 
     // TODO: Tidy up the brackets
     // TODO: Draw character locations on map
+    // TODO: Y-Axis is upsidedown
     // Draw the map on the game screen
     private static void printMap(){
-        char[][] map = board.getMap();
 
-        int n = map.length;
+        char[][] tmp_map = map;
 
-        for(int i=0; i<n; i++) {
-            System.out.println(Arrays.toString(map[i]));
+        for(int i=0; i<num_players; i++){
+            int x = players[i].getPos()[0];
+            int y = players[i].getPos()[1];
+
+            tmp_map[y][x] = players[i].getIcon();
+        }
+
+        for(int i=map.length-1; i>=0; i--) {
+            System.out.println(Arrays.toString(map[i])); //TODO: What the fuck is going on here?
         }
     }
 
     public static Player[] initPlayers(int num_players, ArrayList<Character> characters){
         Player[] players = new Player[num_players];
 
+        int[][] startingPos = new int[][]{
+                {1, 1},
+                {3, 3},
+                {1, 3}
+        };
+
+        char[] icons = new char[]{
+                '€', '£', '$'
+        };
+
         for(int x=0; x<num_players; x++)    {
-            players[x] = new Player(characters.get(x).toString(), characters.get(x));
+            Character character = characters.get(x);
+
+            players[x] = new Player(character.toString(), character, startingPos[x], icons[x]);
             System.out.println("Player " + (x + 1) + " is: " + players[x].getName());
 
             players[x].initNotebook(players[x].getName());
@@ -70,29 +91,64 @@ public class Game {
         return solution;
     }
 
-    public static void move_character(int player_num)  {
+    public static void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
         /*Character player = character;*/
         int dice_num = roll_dice();
-        System.out.println("Player " + player_num + " has rolled the dice!");
+        System.out.println("Player " + player.getName() + " (" + player.getIcon() + ") has rolled the dice!");
         System.out.println("The player has rolled a... " + dice_num + "!");
-        System.out.println("Choose where you would like to move to: [N,E,S,W]");
 
-        for (int x = 0; x < dice_num; x++){
+        for (int i = 0; i < dice_num; i++){
+            int[] coordinates = player.getPos();
+            int x = coordinates[1];
+            int y = coordinates[0];
+
+            printMap();
+            System.out.println("You are at " + Arrays.toString(coordinates));
+            System.out.println("Choose where you would like to move to: [N,E,S,W]");
+
             String direction = scanner.nextLine();
             switch (direction.toUpperCase())  {
-                case "N":   System.out.println("You moved North");
+                case "W":   if(board.canMove(x, y-1)){
+                                System.out.println("You moved West");
+                                player.setPos(x, y-1);
+                            }else{
+                                System.out.println("You cant move there");
+                                i--;
+                            }
                             break;
-                case "E":   System.out.println("You moved East");
+
+                case "N":   if(board.canMove(x+1, y)){
+                                System.out.println("You moved North");
+                                player.setPos(x+1, y);
+                            }else{
+                                System.out.println("You cant move there");
+                                i--;
+                            }
                             break;
-                case "W":   System.out.println("You moved West");
+
+                case "S":   if(board.canMove(x-1, y)){
+                                System.out.println("You moved South");
+                                player.setPos(x-1, y);
+                            }else{
+                                System.out.println("You cant move there");
+                                i--;
+                            }
                             break;
-                case "S":   System.out.println("You moved South");
+
+                case "E":   if(board.canMove(x, y+1)){
+                                System.out.println("You moved East");
+                                player.setPos(x, y+1);
+                            }else{
+                                System.out.println("You cant move there");
+                                i--;
+                            }
                             break;
+
                 default:    System.out.println("Not a valid input");
+                            i--;
                             break;
             }
-            System.out.println("Choose where you would like to move to next: [N,E,S,W]");
         }
 
         System.out.println("Out of moves");

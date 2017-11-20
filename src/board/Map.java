@@ -11,8 +11,8 @@ public class Map {
         { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }
     };
 
-    public boolean canMove(int x1, int y1, int x2, int y2, int moves){
-        if((map[x2][y2] != 'X') && (moves >= getDistance(x1, y1, x2, y2))){
+    public boolean canMove(int x, int y){
+        if(map[x][y] != 'X'){
             return true;
         }
         else{
