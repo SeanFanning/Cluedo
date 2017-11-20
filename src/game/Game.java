@@ -37,12 +37,16 @@ public class Game {
     }
 
     // TODO: Tidy up the brackets
-    // TODO: Draw character locations on map
     // TODO: Y-Axis is upsidedown
     // Draw the map on the game screen
     private static void printMap(){
 
-        char[][] tmp_map = map;
+        char[][] tmp_map = new char[map.length][];
+        //System.arraycopy(map, 0, tmp_map, 0, map.length);
+        //tmp_map = Arrays.copyOf(map, map.length);
+        for(int i=0; i<map.length; i++){
+            tmp_map[i] = map[i].clone();
+        }
 
         for(int i=0; i<num_players; i++){
             int x = players[i].getPos()[0];
@@ -52,7 +56,7 @@ public class Game {
         }
 
         for(int i=map.length-1; i>=0; i--) {
-            System.out.println(Arrays.toString(map[i])); //TODO: What the fuck is going on here?
+            System.out.println(Arrays.toString(tmp_map[i]));
         }
     }
 
@@ -152,12 +156,13 @@ public class Game {
         }
 
         System.out.println("Out of moves");
-
+        printMap();
     }
 
     public static int roll_dice()   {
-        Random rand = new Random();
-        int dice_num = rand.nextInt(12) + 2;
+        //Random rand = new Random();
+        //int dice_num = rand.nextInt(12) + 2;
+        int dice_num = (int)(Math.random() * 12 + 2);
         return dice_num;
     }
 
