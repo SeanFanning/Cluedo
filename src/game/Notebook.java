@@ -8,6 +8,8 @@ public class Notebook {
     private List<String> notes = new ArrayList<String>();
     private String name;
 
+    // TODO: Each note should have a type so you can filter (eg. moves made etc)
+
     public Notebook(String n){
         name = n;
         add_note(name + "\'s Notebook: ");

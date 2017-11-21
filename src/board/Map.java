@@ -5,7 +5,7 @@ import game.Rooms;
 import game.token.Slot;
 
 public class Map {
-    private char[][] map = new char[][]{
+    private char[][] map = new char[][]{ //TODO: Convert this into an array of Slots
             { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
             { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
             { 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X' },

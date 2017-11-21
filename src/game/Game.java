@@ -6,6 +6,8 @@ import game.token.Slot;
 
 public class Game {
 
+    // TODO: Make this less of a mess
+
     private static Map board = new Map();
     private static ArrayList<Character> characters;
     private static Player[] players;
@@ -98,6 +100,7 @@ public class Game {
         return players;
     }
 
+    // TODO: Move this to a new initialisation class
     public static Card[] initSolution()    {
         Card[] solution = new Card[3];
         solution[0] = Character.getRandom();
@@ -138,6 +141,7 @@ public class Game {
         return deck;
     }
 
+    // TODO: Move this to a new movement class
     public static void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
         int dice_num = roll_dice();
@@ -226,6 +230,7 @@ public class Game {
         }
     }
 
+    // TODO: Move this to its own class
     private static void form_hypothesis(int player_num) {
         Card room = Rooms.getRandom();
         System.out.println("You are in the " + room);
