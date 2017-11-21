@@ -15,19 +15,29 @@ public class Game {
 
     public static void main(String[] args){
 
-        num_players = 3;
+        num_players = 6;
         characters = Character.shuffleCharacters(num_players);
 
         Card[] solution = new Card[3];
         solution = initSolution();
 
         players = initPlayers(num_players, characters);
+        dealCards(players,initDeck(solution),num_players);
+
         players[2].addNote("Test note");
         System.out.print("\n");
         printNotebook(players[2].getNotes());
 
+        System.out.println("Your hand is:\n" + players[2].getCards() + "\n");
+        System.out.println("Player 2's hand is:\n" + players[1].getCards() + "\n");
+        System.out.println("Player1's hand is:\n" + players[0].getCards() + "\n");
+
+
 
         move_character(players[2]); /* 3 test move */
+
+        // Testing hypothesis
+        // form_hypothesis(3);
     }
 
     private static void printNotebook(List<String> notes){
@@ -65,11 +75,14 @@ public class Game {
         int[][] startingPos = new int[][]{
                 {1, 1},
                 {3, 3},
-                {1, 3}
+                {1, 3},
+                {1, 2},
+                {1, 4},
+                {3, 1}
         };
 
         char[] icons = new char[]{
-                '€', '£', '$'
+                '€', '£', '$', '%', '@', '&'
         };
 
         for(int x=0; x<num_players; x++)    {
@@ -92,6 +105,37 @@ public class Game {
         solution[2] = Rooms.getRandom();
         System.out.println("Solution is:\nCharacter: " + solution[0] + " Weapon: " + solution[1] + " Room: " + solution[2] + "\n");
         return solution;
+    }
+
+    public static Card[] initDeck(Card[] solution) {
+        Card[] deck = new Card[18];
+        Card[] characters = Character.values();
+        Card[] weapons = Weapon.values();
+        Card[] rooms = Rooms.values();
+        int i = 0;
+        for (Card c : characters) {
+            if (c.equals(solution[0]))    {
+                continue;
+            }
+            deck[i] = c;
+            i++;
+        }
+        for (Card w : weapons)  {
+            if (w.equals(solution[1]))    {
+                continue;
+            }
+            deck[i] = w;
+            i++;
+        }
+        for (Card r : rooms)    {
+            if (r.equals(solution[2]))    {
+                continue;
+            }
+            deck[i] = r;
+            i++;
+        }
+
+        return deck;
     }
 
     public static void move_character(Player player)  {
@@ -164,4 +208,62 @@ public class Game {
         return dice_num;
     }
 
+    public static void dealCards(Player[] player, Card[] deck, int num_players) {
+
+        ArrayList<Card> shuffled_deck = new ArrayList<>();
+        for(Card d : deck){
+            shuffled_deck.add(d);
+        }
+        Collections.shuffle(shuffled_deck);
+
+        int i = 0;
+        for (Card sh : shuffled_deck) {
+            player[i].addCard(sh);
+            i++;
+            if (i == num_players) {
+                i = 0;
+            }
+        }
+    }
+
+    private static void form_hypothesis(int player_num) {
+        Card room = Rooms.getRandom();
+        System.out.println("You are in the " + room);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Which character would you like to accuse? [1:6] - \n" + java.util.Arrays.asList(Character.values()));
+        String c_value = scanner.nextLine();
+        Card character = Character.values()[Integer.parseInt(c_value) - 1];
+        System.out.println("You accused " + character + ".");
+        System.out.println("Which weapon would you like to pick? [1:6] - \n" + java.util.Arrays.asList(Weapon.values()));
+        String w_value = scanner.nextLine();
+        Card weapon = Weapon.values()[Integer.parseInt(w_value) - 1];
+        System.out.println("You picked the " + weapon + " weapon.");
+        System.out.println("I formulated the hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".");
+        players[player_num - 1].addNote("I formulated the hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ",");
+
+        boolean sol_right = true;
+        for (int i = (player_num - 2); i >= 0; i--) {
+            for (Card c : players[i].getCards()) {
+                if (c.equals(weapon)) {
+                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    sol_right = false;
+                    break;
+                } else if (c.equals(character)) {
+                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    sol_right = false;
+                    break;
+                } else if (c.equals(room)) {
+                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
+                    sol_right = false;
+                    break;
+                }
+            }
+            if (sol_right == false) {
+                break;
+            }
+        }
+    }
 }
