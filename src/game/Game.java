@@ -30,11 +30,9 @@ public class Game {
         System.out.print("\n");
         printNotebook(players[2].getNotes());
 
-        System.out.println("Your hand is:\n" + players[2].getCards() + "\n");
-        System.out.println("Player 2's hand is:\n" + players[1].getCards() + "\n");
-        System.out.println("Player1's hand is:\n" + players[0].getCards() + "\n");
-
-
+        for (int i = 0; i < num_players; i++) {
+            System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
+        }
 
         move_character(players[2]); /* 3 test move */
 
