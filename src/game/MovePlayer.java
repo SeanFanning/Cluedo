@@ -41,7 +41,7 @@ public class MovePlayer {
     }
 
     public void move_character(int player_num)  {
-        player_num = player_num - 1;
+        //player_num = player_num - 1;
         Scanner scanner = new Scanner(System.in);
 
         int[] coordinates = players[player_num].getPos();
@@ -50,7 +50,7 @@ public class MovePlayer {
 
         printMap();
         Slot room = board.getSlot(players[player_num].getPos()[0], players[player_num].getPos()[1]);
-        players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
+        players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement");
 
         System.out.println("Where would you like to move? [A, W, S, D]");
         String direction = scanner.nextLine();
@@ -63,7 +63,7 @@ public class MovePlayer {
             }
                 break;
              case "W":   if(board.canMove(x+1, y)){
-                 players[player_num].addNote("You moved North");
+                 players[player_num].addNote("You moved North", "Movement");
                  players[player_num].setPos(x+1, y);
                  }else{
                  System.out.println("You cant move there");
@@ -71,7 +71,7 @@ public class MovePlayer {
                  break;
 
             case "S":   if(board.canMove(x-1, y)){
-                players[player_num].addNote("You moved South");
+                players[player_num].addNote("You moved South", "Movement");
                 players[player_num].setPos(x-1, y);
                 }else{
                     System.out.println("You cant move there");
@@ -79,7 +79,7 @@ public class MovePlayer {
                 break;
 
             case "D":   if(board.canMove(x, y+1)){
-                players[player_num].addNote("You moved East");
+                players[player_num].addNote("You moved East", "Movement");
                 players[player_num].setPos(x, y+1);
                 }else{
                     System.out.println("You cant move there");
@@ -91,7 +91,7 @@ public class MovePlayer {
             }
 
 
-        System.out.println("Out of moves");
+        //System.out.println("Out of moves");
         printMap();
     }
 }

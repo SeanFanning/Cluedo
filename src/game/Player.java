@@ -32,12 +32,16 @@ public class Player {
         notebook = new Notebook(n);
     }
 
-    public void addNote(String s){
-        notebook.add_note(s);
+    public void addNote(String n, String t){
+        notebook.add_note(n, t);
     }
 
-    public List<String> getNotes(){
+    public List<Note> getNotes(){
         return notebook.getNotes();
+    }
+
+    public List<Note> filterNotes(String t){
+        return notebook.filterNotes(t);
     }
 
     public String getName(){
@@ -55,5 +59,4 @@ public class Player {
     public char getIcon(){
         return pawn.getIcon();
     }
-
 }

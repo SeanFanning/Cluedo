@@ -22,22 +22,27 @@ public class Game {
         players = initPlayers(num_players, characters);
         dealCards(players,initDeck(solution),num_players);
 
-        players[2].addNote("Test note");
+        players[2].addNote("Test note", "Test");
         System.out.print("\n");
         printNotebook(players[2].getNotes());
+        printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
 
         for (int i = 0; i < num_players; i++) {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
+            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards");
         }
 
         movePlayer = new MovePlayer(num_players,players);
         takeTurn(players[0],1);
 
+
+
     }
 
-    private static void printNotebook(List<String> notes){
+    private static void printNotebook(List<Note> notes){
+        System.out.println("Notebook: ");
         for(int i=0; i<notes.size(); i++){
-            System.out.println(notes.get(i));
+            System.out.println(notes.get(i).getType() + ": " + notes.get(i).getNote());
         }
         System.out.println();
     }
@@ -66,13 +71,14 @@ public class Game {
             System.out.println("Player " + (x + 1) + " is: " + players[x].getName());
 
             players[x].initNotebook(players[x].getName());
-            players[x].addNote("Player " + (x + 1));
+            players[x].addNote("Player " + (x + 1), "Info");
         }
 
         return players;
     }
 
-    public static Card[] initSolution()    {
+    // TODO: Move this to a new initialisation class
+    public static Card[] initSolution(){
         Card[] solution = new Card[3];
         solution[0] = Character.getRandom();
         solution[1] = Weapon.getRandom();
@@ -81,6 +87,7 @@ public class Game {
         return solution;
     }
 
+    // TODO: Move this to a new initialisation class
     public static Card[] initDeck(Card[] solution) {
         Card[] deck = new Card[18];
         Card[] characters = Character.values();
@@ -141,11 +148,12 @@ public class Game {
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
 
         int dice_num = roll_dice();
-        players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") rolls a " + dice_num + "!");
+        players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") rolls a " + dice_num + "!", "Game");
         System.out.println(player.getName() + " (uid: " + player_num + ").");
         int num;
         Scanner sc = new Scanner(System.in);
-        for (int i = 0; i < dice_num; i++) {
+        for (int i = dice_num; i > 0; i--) {
+            System.out.println("You have " + i + " turns left");
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: Help");
                 while (!sc.hasNextInt()) {
