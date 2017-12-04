@@ -36,8 +36,9 @@ public class Game {
 
         move_character(players[2]); /* 3 test move */
 
-        // Testing hypothesis
-        // form_hypothesis(3);
+        // Testing Hypothesis
+        Hypothesis my_hypothesis = new Hypothesis(players);
+        my_hypothesis.form_hypothesis(3);
     }
 
     private static void printNotebook(List<String> notes){
@@ -229,44 +230,4 @@ public class Game {
     }
 
     // TODO: Move this to its own class
-    private static void form_hypothesis(int player_num) {
-        Card room = Rooms.getRandom();
-        System.out.println("You are in the " + room);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Which character would you like to accuse? [1:6] - \n" + java.util.Arrays.asList(Character.values()));
-        String c_value = scanner.nextLine();
-        Card character = Character.values()[Integer.parseInt(c_value) - 1];
-        System.out.println("You accused " + character + ".");
-        System.out.println("Which weapon would you like to pick? [1:6] - \n" + java.util.Arrays.asList(Weapon.values()));
-        String w_value = scanner.nextLine();
-        Card weapon = Weapon.values()[Integer.parseInt(w_value) - 1];
-        System.out.println("You picked the " + weapon + " weapon.");
-        System.out.println("I formulated the hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".");
-        players[player_num - 1].addNote("I formulated the hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ",");
-
-        boolean sol_right = true;
-        for (int i = (player_num - 2); i >= 0; i--) {
-            for (Card c : players[i].getCards()) {
-                if (c.equals(weapon)) {
-                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    sol_right = false;
-                    break;
-                } else if (c.equals(character)) {
-                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    sol_right = false;
-                    break;
-                } else if (c.equals(room)) {
-                    System.out.println("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    players[player_num - 1].addNote("Player " + (i + 1) + " has card " + c + ". Hypothesis has been refuted.");
-                    sol_right = false;
-                    break;
-                }
-            }
-            if (sol_right == false) {
-                break;
-            }
-        }
-    }
 }
