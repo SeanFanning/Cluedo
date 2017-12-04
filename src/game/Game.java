@@ -9,6 +9,7 @@ public class Game {
     private static ArrayList<Character> characters;
     private static Player[] players;
     private static int num_players;
+    private static MovePlayer movePlayer;
 
     public static void main(String[] args){
 
@@ -29,6 +30,7 @@ public class Game {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
         }
 
+        movePlayer = new MovePlayer(num_players,players);
         takeTurn(players[0],1);
 
     }
@@ -134,7 +136,7 @@ public class Game {
     }
 
     public static void takeTurn(Player player, int player_num)   {
-        MovePlayer movePlayer = new MovePlayer(num_players,players);
+
         // Testing Hypothesis
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
 
