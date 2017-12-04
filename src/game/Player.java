@@ -1,9 +1,12 @@
 package game;
 
 import game.token.CharacterPawn;
+import game.token.Slot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player {
 
@@ -52,4 +55,5 @@ public class Player {
     public char getIcon(){
         return pawn.getIcon();
     }
+
 }

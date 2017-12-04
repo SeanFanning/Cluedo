@@ -17,6 +17,7 @@ public class Notebook {
 
     // Function to add a string to the notebook
     public void add_note(String n){
+        System.out.println(n);
         notes.add(n);
     }
 
