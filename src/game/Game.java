@@ -34,10 +34,10 @@ public class Game {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
         }
 
-        move_character(players[2]); /* 3 test move */
+        //move_character(players[2]); /* 3 test move */
 
         // Testing Hypothesis
-        Hypothesis my_hypothesis = new Hypothesis(players);
+        Hypothesis my_hypothesis = new Hypothesis(players,num_players);
         my_hypothesis.form_hypothesis(3);
     }
 
