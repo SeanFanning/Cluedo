@@ -18,6 +18,9 @@ public class MovePlayer {
         this.players = players;
     }
 
+    // TODO: Tidy up the brackets
+    // TODO: Y-Axis is upsidedown
+    // Draw the map on the game screen
     private void printMap(){
 
         char[][] tmp_map = new char[map.length][];

@@ -16,6 +16,21 @@ public class Map {
             { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' }
     };
 
+    private Slot[][] map_slots = new Slot[map.length][map[0].length];
+    
+    
+    public Map(){
+        generateMapSlots();
+    }
+    
+    private void generateMapSlots(){
+        for(int i=0; i<map.length; i++){
+            for(int j=0; j<map[0].length; j++){
+                map_slots[i][j] = convertMap(j, i);
+            }
+        }
+    }
+
     public boolean canMove(int x, int y){
         if(map[x][y] != 'X'){
             return true;
@@ -29,7 +44,8 @@ public class Map {
         return map;
     }
 
-    public Slot getSlot(int x, int y){
+    //Converts the characters in the char map into slots
+    public Slot convertMap(int x, int y){
         char c = map[y][x];
         Card card;
         Slot slot;
@@ -53,7 +69,7 @@ public class Map {
                 break;
             case 'H':   slot = new Slot(Rooms.HALL.toString());
                 break;
-            case ' ':   slot = new Slot("Outside");
+            case ' ':   slot = new Slot("Hallway");
                 break;
             case 'X':   slot = new Slot("Wall");
                 break;
@@ -61,6 +77,10 @@ public class Map {
         }
 
         return slot;
+    }
+
+    public Slot getSlot(int x, int y){
+        return map_slots[y][x];
     }
 
     //TODO: DFS Search to get distance to destination, while moving around walls etc.

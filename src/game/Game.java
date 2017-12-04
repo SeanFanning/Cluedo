@@ -40,9 +40,6 @@ public class Game {
         System.out.println();
     }
 
-    // TODO: Tidy up the brackets
-    // TODO: Y-Axis is upsidedown
-    // Draw the map on the game screen
 
     public static Player[] initPlayers(int num_players, ArrayList<Character> characters){
         Player[] players = new Player[num_players];
