@@ -37,66 +37,56 @@ public class MovePlayer {
         }
     }
 
-    public void move_character(int dice_num, int player_num)  {
+    public void move_character(int player_num)  {
         player_num = player_num - 1;
         Scanner scanner = new Scanner(System.in);
 
-        players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") has rolled the dice!");
-        players[player_num].addNote("The player has rolled a... " + dice_num + "!");
+        int[] coordinates = players[player_num].getPos();
+        int x = coordinates[1];
+        int y = coordinates[0];
 
-        for (int i = 0; i < dice_num; i++){
-            int[] coordinates = players[player_num].getPos();
-            int x = coordinates[1];
-            int y = coordinates[0];
+        printMap();
+        Slot room = board.getSlot(players[player_num].getPos()[0], players[player_num].getPos()[1]);
+        players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
 
-            printMap();
-            Slot room = board.getSlot(players[player_num].getPos()[0], players[player_num].getPos()[1]);
-            players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
-            players[player_num].addNote("You have " + (dice_num-i) + " moves left: [W,A,S,D]");
-
-            String direction = scanner.nextLine();
-            switch (direction.toUpperCase())  {
-                case "A":   if(board.canMove(x, y-1)){
-                    System.out.println("You moved West");
-                    players[player_num].setPos(x, y-1);
+        System.out.println("Where would you like to move? [A, W, S, D]");
+        String direction = scanner.nextLine();
+        switch (direction.toUpperCase())  {
+            case "A":   if(board.canMove(x, y-1)){
+                System.out.println("You moved West");
+                players[player_num].setPos(x, y-1);
                 }else{
-                    System.out.println("You cant move there");
-                    i--;
-                }
-                    break;
-
-                case "W":   if(board.canMove(x+1, y)){
-                    players[player_num].addNote("You moved North");
-                    players[player_num].setPos(x+1, y);
-                }else{
-                    System.out.println("You cant move there");
-                    i--;
-                }
-                    break;
-
-                case "S":   if(board.canMove(x-1, y)){
-                    players[player_num].addNote("You moved South");
-                    players[player_num].setPos(x-1, y);
-                }else{
-                    System.out.println("You cant move there");
-                    i--;
-                }
-                    break;
-
-                case "D":   if(board.canMove(x, y+1)){
-                    players[player_num].addNote("You moved East");
-                    players[player_num].setPos(x, y+1);
-                }else{
-                    System.out.println("You cant move there");
-                    i--;
-                }
-                    break;
-
-                default:    System.out.println("Not a valid input");
-                    i--;
-                    break;
+                System.out.println("You cant move there");
             }
-        }
+                break;
+             case "W":   if(board.canMove(x+1, y)){
+                 players[player_num].addNote("You moved North");
+                 players[player_num].setPos(x+1, y);
+                 }else{
+                 System.out.println("You cant move there");
+             }
+                 break;
+
+            case "S":   if(board.canMove(x-1, y)){
+                players[player_num].addNote("You moved South");
+                players[player_num].setPos(x-1, y);
+                }else{
+                    System.out.println("You cant move there");
+                }
+                break;
+
+            case "D":   if(board.canMove(x, y+1)){
+                players[player_num].addNote("You moved East");
+                players[player_num].setPos(x, y+1);
+                }else{
+                    System.out.println("You cant move there");
+                }
+                    break;
+
+            default:    System.out.println("Not a valid input");
+                break;
+            }
+
 
         System.out.println("Out of moves");
         printMap();

@@ -29,13 +29,8 @@ public class Game {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
         }
 
-        //move_character(players[2]); /* 3 test move */
-        MovePlayer movePlayer = new MovePlayer(num_players,players);
-        movePlayer.move_character(roll_dice(),3);
+        takeTurn(players[0],1);
 
-        // Testing Hypothesis
-        Hypothesis my_hypothesis = new Hypothesis(players,num_players);
-        my_hypothesis.form_hypothesis(3);
     }
 
     private static void printNotebook(List<String> notes){
@@ -137,6 +132,40 @@ public class Game {
             i++;
             if (i == num_players) {
                 i = 0;
+            }
+        }
+    }
+
+    public static void takeTurn(Player player, int player_num)   {
+        MovePlayer movePlayer = new MovePlayer(num_players,players);
+        // Testing Hypothesis
+        Hypothesis my_hypothesis = new Hypothesis(players,num_players);
+
+        int dice_num = roll_dice();
+        players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") rolls a " + dice_num + "!");
+        System.out.println(player.getName() + " (uid: " + player_num + ").");
+        int num;
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < dice_num; i++) {
+            do {
+                System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: Help");
+                while (!sc.hasNextInt()) {
+                    System.out.println("That's not a number");
+                    sc.next();
+                }
+                num = sc.nextInt();
+            } while (num <= 0 || num > dice_num);
+            if (num == 1)   {
+                movePlayer.move_character(player_num);
+            }
+            else if (num == 2)  {
+                my_hypothesis.form_hypothesis(3);
+            }
+            else if (num == 3)  {
+                System.out.println("WIP");
+            }
+            else    {
+                System.out.println("WIP");
             }
         }
     }
