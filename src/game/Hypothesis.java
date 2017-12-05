@@ -42,6 +42,10 @@ public class Hypothesis {
 
         boolean sol_right = true;
         int index = player_num - 2;
+        if (index == -1)    {
+            index = player_num - 1;
+        }
+
         for (Player player : players) {
             for (Card c : players[index].getCards()) {
                 if (c.equals(weapon)) {

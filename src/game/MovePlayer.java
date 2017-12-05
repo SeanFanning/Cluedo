@@ -41,7 +41,7 @@ public class MovePlayer {
     }
 
     public void move_character(int player_num)  {
-        //player_num = player_num - 1;
+        player_num = player_num - 1;
         Scanner scanner = new Scanner(System.in);
 
         int[] coordinates = players[player_num].getPos();

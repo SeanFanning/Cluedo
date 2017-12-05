@@ -149,13 +149,13 @@ public class Game {
 
         int dice_num = roll_dice();
         players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") rolls a " + dice_num + "!", "Game");
-        System.out.println(player.getName() + " (uid: " + player_num + ").");
+        System.out.println(player.getName() + " (uid: " + player_num + ")");
         int num;
         Scanner sc = new Scanner(System.in);
         for (int i = dice_num; i > 0; i--) {
             System.out.println("You have " + i + " turns left");
             do {
-                System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: Help");
+                System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
                 while (!sc.hasNextInt()) {
                     System.out.println("That's not a number");
                     sc.next();
@@ -166,13 +166,15 @@ public class Game {
                 movePlayer.move_character(player_num);
             }
             else if (num == 2)  {
-                my_hypothesis.form_hypothesis(3);
+                my_hypothesis.form_hypothesis(player_num);
             }
             else if (num == 3)  {
                 System.out.println("WIP");
             }
             else    {
-                System.out.println("WIP");
+                for (Note c : player.getNotes()) {
+                    System.out.println(c.getNote());
+                }
             }
         }
     }
