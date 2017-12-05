@@ -19,6 +19,7 @@ public class Notebook {
     // Function to add a string to the notebook
     public void add_note(String n, String t){
         Note note = new Note(n, t);
+        System.out.println(n);
         notes.add(note);
     }
 

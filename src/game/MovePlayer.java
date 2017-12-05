@@ -52,44 +52,57 @@ public class MovePlayer {
         Slot room = board.getSlot(players[player_num].getPos()[0], players[player_num].getPos()[1]);
         players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement");
 
-        System.out.println("Where would you like to move? [A, W, S, D]");
-        String direction = scanner.nextLine();
-        switch (direction.toUpperCase())  {
-            case "A":   if(board.canMove(x, y-1)){
-                System.out.println("You moved West");
-                players[player_num].setPos(x, y-1);
-                }else{
-                System.out.println("You cant move there");
-            }
-                break;
-             case "W":   if(board.canMove(x+1, y)){
-                 players[player_num].addNote("You moved North", "Movement");
-                 players[player_num].setPos(x+1, y);
-                 }else{
-                 System.out.println("You cant move there");
-             }
-                 break;
+        inputLoop:  while(true) {
+            System.out.println("Where would you like to move? [A, W, S, D]");
+            String direction = scanner.nextLine();
+            switch (direction.toUpperCase()) {
+                case "A":
+                    if (board.canMove(x, y - 1)) {
+                        System.out.println("You moved West");
+                        players[player_num].setPos(x, y - 1);
+                        break inputLoop;
+                    } else {
+                        System.out.println("You cant move there");
+                        break;
+                    }
+                case "W":
+                    if (board.canMove(x + 1, y)) {
+                        players[player_num].addNote("You moved North", "Movement");
+                        players[player_num].setPos(x + 1, y);
+                        break inputLoop;
+                    } else {
+                        System.out.println("You cant move there");
+                        break;
+                    }
 
-            case "S":   if(board.canMove(x-1, y)){
-                players[player_num].addNote("You moved South", "Movement");
-                players[player_num].setPos(x-1, y);
-                }else{
-                    System.out.println("You cant move there");
-                }
-                break;
 
-            case "D":   if(board.canMove(x, y+1)){
-                players[player_num].addNote("You moved East", "Movement");
-                players[player_num].setPos(x, y+1);
-                }else{
-                    System.out.println("You cant move there");
-                }
+                case "S":
+                    if (board.canMove(x - 1, y)) {
+                        players[player_num].addNote("You moved South", "Movement");
+                        players[player_num].setPos(x - 1, y);
+                        break inputLoop;
+                    } else {
+                        System.out.println("You cant move there");
+                        break;
+                    }
+
+
+                case "D":
+                    if (board.canMove(x, y + 1)) {
+                        players[player_num].addNote("You moved East", "Movement");
+                        players[player_num].setPos(x, y + 1);
+                        break inputLoop;
+                    } else {
+                        System.out.println("You cant move there");
+                        break;
+                    }
+
+
+                default:
+                    System.out.println("Not a valid input");
                     break;
-
-            default:    System.out.println("Not a valid input");
-                break;
             }
-
+        }
 
         //System.out.println("Out of moves");
         printMap();

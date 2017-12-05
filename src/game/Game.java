@@ -152,7 +152,8 @@ public class Game {
         System.out.println(player.getName() + " (uid: " + player_num + ")");
         int num;
         Scanner sc = new Scanner(System.in);
-        for (int i = dice_num; i > 0; i--) {
+        int i = dice_num;
+        while(i > 0) {
             System.out.println("You have " + i + " turns left");
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
@@ -161,12 +162,14 @@ public class Game {
                     sc.next();
                 }
                 num = sc.nextInt();
-            } while (num <= 0 || num > dice_num);
+            } while (num <= 0 || num > 5);
             if (num == 1)   {
                 movePlayer.move_character(player_num);
+                i--;
             }
             else if (num == 2)  {
                 my_hypothesis.form_hypothesis(player_num);
+                i--;
             }
             else if (num == 3)  {
                 System.out.println("WIP");
