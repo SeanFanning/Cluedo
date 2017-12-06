@@ -2,9 +2,9 @@ package game;
 
 import board.Map;
 import game.token.Slot;
+import java.util.*;
 
-import java.util.Arrays;
-import java.util.Scanner;
+
 
 public class MovePlayer {
 
@@ -40,26 +40,78 @@ public class MovePlayer {
         }
     }
 
-    public void move_character(int player_num)  {
-        player_num = player_num - 1;
+    public Hashtable<String, Boolean> checkMove(int x, int y)
+    {
+
+        Hashtable<String, Boolean> hm = new Hashtable();
+
+        if (board.canMove(x, y - 1)) {
+            hm.put("West [A]",true);
+        }
+        else {
+            hm.put("West [A]",false);
+        }
+
+        if (board.canMove(x+1, y )) {
+            hm.put("North [W]",true);
+        }
+        else {
+            hm.put("North [W]",false);
+        }
+
+        if (board.canMove(x-1, y )) {
+            hm.put("South [S]",true);
+        }
+        else {
+            hm.put("South [S]",false);
+        }
+
+        if (board.canMove(x, y + 1)) {
+            hm.put("East [D]",true);
+        }
+        else {
+            hm.put("East [D]",false);
+        }
+
+        return hm;
+    }
+
+    public void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
 
-        int[] coordinates = players[player_num].getPos();
+        int[] coordinates = player.getPos();
         int x = coordinates[1];
         int y = coordinates[0];
 
         printMap();
-        Slot room = board.getSlot(players[player_num].getPos()[0], players[player_num].getPos()[1]);
-        players[player_num].addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement");
+        Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
+        player.addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement");
+
+        Hashtable<String,Boolean> hm = checkMove(x,y);
+        String message = "Select where you would like to move: ";
+        String[] directions = {"West [A]","North [W]","South [S]","East [D]"};
+
+        int lol = 0;
+        for (String dir : directions)   {
+            if (hm.get(dir))    {
+                if (lol == 0) {
+                    message += dir;
+                }
+                else    {
+                    message += ", " + dir;
+                }
+                lol = 1;
+            }
+        }
 
         inputLoop:  while(true) {
-            System.out.println("Where would you like to move? [A, W, S, D]");
+            System.out.println(message);
             String direction = scanner.nextLine();
             switch (direction.toUpperCase()) {
                 case "A":
                     if (board.canMove(x, y - 1)) {
                         System.out.println("You moved West");
-                        players[player_num].setPos(x, y - 1);
+                        player.setPos(x, y - 1);
                         break inputLoop;
                     } else {
                         System.out.println("You cant move there");
@@ -67,8 +119,8 @@ public class MovePlayer {
                     }
                 case "W":
                     if (board.canMove(x + 1, y)) {
-                        players[player_num].addNote("You moved North", "Movement");
-                        players[player_num].setPos(x + 1, y);
+                        player.addNote("You moved North", "Movement");
+                        player.setPos(x + 1, y);
                         break inputLoop;
                     } else {
                         System.out.println("You cant move there");
@@ -78,8 +130,8 @@ public class MovePlayer {
 
                 case "S":
                     if (board.canMove(x - 1, y)) {
-                        players[player_num].addNote("You moved South", "Movement");
-                        players[player_num].setPos(x - 1, y);
+                        player.addNote("You moved South", "Movement");
+                        player.setPos(x - 1, y);
                         break inputLoop;
                     } else {
                         System.out.println("You cant move there");
@@ -89,8 +141,8 @@ public class MovePlayer {
 
                 case "D":
                     if (board.canMove(x, y + 1)) {
-                        players[player_num].addNote("You moved East", "Movement");
-                        players[player_num].setPos(x, y + 1);
+                        player.addNote("You moved East", "Movement");
+                        player.setPos(x, y + 1);
                         break inputLoop;
                     } else {
                         System.out.println("You cant move there");

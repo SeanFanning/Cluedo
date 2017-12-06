@@ -33,9 +33,9 @@ public class Game {
         }
 
         movePlayer = new MovePlayer(num_players,players);
-        takeTurn(players[0],1);
-
-
+        for (Player player : players) {
+            takeTurn(player, Arrays.asList(players).indexOf(player));
+        }
 
     }
 
@@ -148,12 +148,12 @@ public class Game {
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
 
         int dice_num = roll_dice();
-        players[player_num].addNote("Player " + players[player_num].getName() + " (" + players[player_num].getIcon() + ") rolls a " + dice_num + "!", "Game");
-        System.out.println(player.getName() + " (uid: " + player_num + ")");
+        player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game");
         int num;
         Scanner sc = new Scanner(System.in);
         int i = dice_num;
         while(i > 0) {
+            System.out.println(player.getName() + " (uid: " + player.getIcon() + ")");
             System.out.println("You have " + i + " turns left");
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
@@ -164,11 +164,11 @@ public class Game {
                 num = sc.nextInt();
             } while (num <= 0 || num > 5);
             if (num == 1)   {
-                movePlayer.move_character(player_num);
+                movePlayer.move_character(player);
                 i--;
             }
             else if (num == 2)  {
-                my_hypothesis.form_hypothesis(player_num);
+                my_hypothesis.form_hypothesis(player,player_num);
                 i--;
             }
             else if (num == 3)  {
