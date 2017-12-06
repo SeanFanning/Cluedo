@@ -13,7 +13,22 @@ public class Game {
 
     public static void main(String[] args){
 
-        num_players = 6;
+        System.out.println("Welcome to Cludeo! How many people will be playing? [3-6]");
+        Scanner sc = new Scanner(System.in);
+        int num_players;
+        int check = 0;
+        do {
+            if (check == 1) {
+                System.out.println("Number must be from 3 to 6");
+            }
+            while (!sc.hasNextInt()) {
+                System.out.println("That's not a number");
+                sc.next();
+            }
+            num_players = sc.nextInt();
+            check++;
+        } while (num_players <= 2 || num_players > 6);
+
         characters = Character.shuffleCharacters(num_players);
 
         Card[] solution = new Card[3];
