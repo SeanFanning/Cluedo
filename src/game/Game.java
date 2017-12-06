@@ -15,7 +15,7 @@ public class Game {
 
         System.out.println("Welcome to Cludeo! How many people will be playing? [3-6]");
         Scanner sc = new Scanner(System.in);
-        int num_players;
+        num_players = 0;
         int check = 0;
         do {
             if (check == 1) {
@@ -31,7 +31,7 @@ public class Game {
 
         characters = Character.shuffleCharacters(num_players);
 
-        Card[] solution = new Card[3];
+        Card[] solution;
         solution = initSolution();
 
         players = initPlayers(num_players, characters);
@@ -135,7 +135,7 @@ public class Game {
     }
 
     public static int roll_dice()   {
-        int dice_num = (int)(Math.random() * 12 + 2);
+        int dice_num = (int)(Math.random() * 11 + 2);
         return dice_num;
     }
 
