@@ -14,7 +14,7 @@ public class Hypothesis {
     }
 
     public void form_hypothesis(Player player, int player_num) {
-        Card room = Rooms.getRandom(); // change this to room player is actually in
+        Card room = Rooms.CONSERVATORY; // change this to room player is actually in
         player.addNote("You are in the " + room, "Hypothesis");
         Scanner sc = new Scanner(System.in);
         int number;
@@ -25,7 +25,7 @@ public class Hypothesis {
                 sc.next(); // this is important!
             }
             number = sc.nextInt();
-        } while (number <= 0 || number > num_players);
+        } while (number <= 0 || number > 6);
         Card character = Character.values()[number - 1];
         player.addNote("You accused " + character + ".", "Accusation");
         do {
@@ -35,7 +35,7 @@ public class Hypothesis {
                 sc.next(); // this is important!
             }
             number = sc.nextInt();
-        } while (number <= 0 || number > num_players);
+        } while (number <= 0 || number > 6);
         Card weapon = Weapon.values()[number - 1];
         player.addNote("You picked the " + weapon + " weapon.", "Hypothesis");
         player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis");
@@ -58,6 +58,11 @@ public class Hypothesis {
                     break;
                 } else if (c.equals(room)) {
                     player.addNote("Player " + (index + 1) + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis");
+                    sol_right = false;
+                    break;
+                }
+                else    {
+                    player.addNote("No other player has any of these cards", "Hypothesis");
                     sol_right = false;
                     break;
                 }
