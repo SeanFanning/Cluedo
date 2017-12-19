@@ -14,6 +14,7 @@ public class Player {
     private Notebook notebook;
     private Character character;
     private CharacterPawn pawn;
+    private boolean inGame = true;
 
     public Player(String n, Character c, int[] startingPos, char icon){
         character = c;
@@ -58,5 +59,12 @@ public class Player {
 
     public char getIcon(){
         return pawn.getIcon();
+    }
+
+    public boolean returnGame() {
+        return inGame;
+    }
+    public void rm() {
+        inGame = false;
     }
 }

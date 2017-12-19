@@ -48,9 +48,18 @@ public class Game {
         }
 
         movePlayer = new MovePlayer(num_players,players);
-        for (Player player : players) {
-            takeTurn(player, Arrays.asList(players).indexOf(player));
-            System.out.println("\nNext players turn!\n\n");
+        while(true) {
+            List<Player> playersInGame = new ArrayList<Player>();
+            for (Player player : players)    {
+                if (player.returnGame())    {
+                    playersInGame.add(player);
+                }
+            }
+            for (Player player : playersInGame) {
+                System.out.println(player.getName());
+                takeTurn(player, playersInGame.indexOf(player));
+                System.out.println("\nNext players turn!\n\n");
+            }
         }
 
     }
@@ -184,11 +193,19 @@ public class Game {
                 i--;
             }
             else if (num == 2)  {
+                if (movePlayer.return_pos(player).equals("Hallway"))    {
+                    System.out.println("You must be in a room to form a hypothesis");
+                    continue;
+                }
                 my_hypothesis.form_hypothesis(player,player_num,movePlayer.return_pos(player));
                 i--;
             }
             else if (num == 3)  {
-                System.out.println("WIP");
+                boolean sol = my_hypothesis.accuse(player,player_num,movePlayer.return_pos(player));
+                if (!sol)   {
+                    break;
+                }
+                i--;
             }
             else    {
                 for (Note c : player.getNotes()) {

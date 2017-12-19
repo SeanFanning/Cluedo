@@ -13,8 +13,7 @@ public class Hypothesis {
         this.num_players = num_players;
     }
 
-    public void form_hypothesis(Player player, int player_num, String ro) {
-        String room = ro; // change this to room player is actually in
+    public Card[] rename(Player player, int player_num, String room) {
         player.addNote("You are in the " + room, "Hypothesis",true);
         Scanner sc = new Scanner(System.in);
         int number;
@@ -49,7 +48,15 @@ public class Hypothesis {
             p.addNote(player.getName() + " formulated the hypothesis that " + character + " made the murder in the "+ room + " with the " + weapon + ".", "Hypothesis",false);
             count++;
         }
+        Card[] ans = {character,weapon};
+        return ans;
+    }
 
+    public void form_hypothesis(Player player, int player_num, String room) {
+
+        Card [] ans = rename(player,player_num,room);
+        Card character = ans[0];
+        Card weapon = ans[1];
 
         boolean sol_right = true;
         int index = player_num - 1;
@@ -69,7 +76,7 @@ public class Hypothesis {
                     players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis",false);
                     sol_right = false;
                     break;
-                } else if (c.equals(room)) {
+                } else if (c.toString().equals(room)) {
                     player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis",true);
                     players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis",false);
                     sol_right = false;
@@ -89,7 +96,7 @@ public class Hypothesis {
             player.addNote("No one else has these cards", "Hypothesis",true);
         }
         else    {
-            count = 0;
+            int count = 0;
             for (Player p : players)    {
                 if (count == player_num || count == index)    {
                     count++;
@@ -102,7 +109,41 @@ public class Hypothesis {
 
     }
 
-    public void accuse(int player_num)  {
+    public boolean accuse(Player player, int player_num, String room)  {
+        Card [] ans = rename(player,player_num,room);
+        Card character = ans[0];
+        Card weapon = ans[1];
 
+        boolean sol_right = true;
+        int index = player_num - 1;
+        if (index == -1)    {
+            index = num_players - 1;
+        }
+
+        for (Player pl : players) {
+            for (Card c : players[index].getCards()) {
+                if (c.equals(weapon)) {
+                    sol_right = false;
+                    break;
+                } else if (c.equals(character)) {
+                    sol_right = false;
+                    break;
+                } else if (c.toString().equals(room)) {
+                    sol_right = false;
+                    break;
+                }
+
+            }
+            if (!sol_right) {
+                System.out.println("Your solution is wrong. You are the weakest link, goodbye.");
+                player.rm();
+                break;
+            }
+            index--;
+            if (index == -1)    {
+                index = num_players - 1;
+            }
+        }
+        return sol_right;
     }
 }
