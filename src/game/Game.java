@@ -50,6 +50,7 @@ public class Game {
         movePlayer = new MovePlayer(num_players,players);
         for (Player player : players) {
             takeTurn(player, Arrays.asList(players).indexOf(player));
+            System.out.println("\nNext players turn!\n\n");
         }
 
     }
@@ -183,7 +184,7 @@ public class Game {
                 i--;
             }
             else if (num == 2)  {
-                my_hypothesis.form_hypothesis(player,player_num);
+                my_hypothesis.form_hypothesis(player,player_num,Rooms.CONSERVATORY);
                 i--;
             }
             else if (num == 3)  {
