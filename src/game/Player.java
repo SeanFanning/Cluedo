@@ -32,8 +32,8 @@ public class Player {
         notebook = new Notebook(n);
     }
 
-    public void addNote(String n, String t){
-        notebook.add_note(n, t);
+    public void addNote(String n, String t, Boolean b){
+        notebook.add_note(n, t, b);
     }
 
     public List<Note> getNotes(){

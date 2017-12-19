@@ -13,13 +13,15 @@ public class Notebook {
 
     public Notebook(String n){
         name = n;
-        add_note(name + "\'s Notebook: ", "Info");
+        add_note(name + "\'s Notebook: ", "Info", false);
     }
 
     // Function to add a string to the notebook
-    public void add_note(String n, String t){
+    public void add_note(String n, String t, Boolean out){
         Note note = new Note(n, t);
-        System.out.println(n);
+        if (out) {
+            System.out.println(n);
+        }
         notes.add(note);
     }
 

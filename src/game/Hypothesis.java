@@ -13,9 +13,9 @@ public class Hypothesis {
         this.num_players = num_players;
     }
 
-    public void form_hypothesis(Player player, int player_num, Card ro) {
-        Card room = ro; // change this to room player is actually in
-        player.addNote("You are in the " + room, "Hypothesis");
+    public void form_hypothesis(Player player, int player_num, String ro) {
+        String room = ro; // change this to room player is actually in
+        player.addNote("You are in the " + room, "Hypothesis",true);
         Scanner sc = new Scanner(System.in);
         int number;
         do {
@@ -27,7 +27,7 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card character = Character.values()[number - 1];
-        player.addNote("You accused " + character + ".", "Accusation");
+        player.addNote("You accused " + character + ".", "Accusation",true);
         do {
             System.out.println("Which weapon would you like to pick? [1:6] - \n" + java.util.Arrays.asList(Weapon.values()));
             while (!sc.hasNextInt()) {
@@ -37,8 +37,8 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card weapon = Weapon.values()[number - 1];
-        player.addNote("You picked the " + weapon + " weapon.", "Hypothesis");
-        player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis");
+        player.addNote("You picked the " + weapon + " weapon.", "Hypothesis",true);
+        player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis",true);
 
         int count = 0;
         for (Player p : players)    {
@@ -46,8 +46,7 @@ public class Hypothesis {
                 count++;
                 continue;
             }
-            System.out.println("Player " + p.getName());
-            p.addNote(player.getName() + " formulated the hypothesis that " + character + " made the murder in the "+ room + " with the " + weapon + ".", "Hypothesis");
+            p.addNote(player.getName() + " formulated the hypothesis that " + character + " made the murder in the "+ room + " with the " + weapon + ".", "Hypothesis",false);
             count++;
         }
 
@@ -61,18 +60,18 @@ public class Hypothesis {
         for (Player pl : players) {
             for (Card c : players[index].getCards()) {
                 if (c.equals(weapon)) {
-                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis");
-                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis");
+                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis",true);
+                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis",false);
                     sol_right = false;
                     break;
                 } else if (c.equals(character)) {
-                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis");
-                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis");
+                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis",true);
+                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis",false);
                     sol_right = false;
                     break;
                 } else if (c.equals(room)) {
-                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis");
-                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis");
+                    player.addNote(players[index].getName() + " has card " + c + ". Hypothesis has been refuted.", "Hypothesis",true);
+                    players[index].addNote("I refuted the hypothesis showing card \"" + c + "\"", "Hypothesis",false);
                     sol_right = false;
                     break;
                 }
@@ -87,7 +86,7 @@ public class Hypothesis {
             }
         }
         if (sol_right) {
-            player.addNote("No one else has these cards", "Hypothesis");
+            player.addNote("No one else has these cards", "Hypothesis",true);
         }
         else    {
             count = 0;
@@ -96,7 +95,7 @@ public class Hypothesis {
                     count++;
                     continue;
                 }
-                p.addNote(players[index].getName() + " refuted the hypothesis by showing a card.", "Hypothesis");
+                p.addNote(players[index].getName() + " refuted the hypothesis by showing a card.", "Hypothesis",false);
                 count++;
             }
         }

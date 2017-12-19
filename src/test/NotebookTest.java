@@ -20,7 +20,7 @@ public class NotebookTest {
         // assert statements
         assertEquals(notebook.getNotes().get(0).getNote(), "PROFESSOR_PLUM\'s Notebook: ");
         assertNotEquals(notebook.getNotes().get(0).getNote(), "PROFESSOR_PLUM\'s Notebook:");
-        notebook.add_note("Test note in notebook", "Test");
+        notebook.add_note("Test note in notebook", "Test",false);
         assertEquals(notebook.getNotes().get(1).getNote(), "Test note in notebook");
     }
 

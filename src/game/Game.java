@@ -37,14 +37,14 @@ public class Game {
         players = initPlayers(num_players, characters);
         dealCards(players,initDeck(solution),num_players);
 
-        players[2].addNote("Test note", "Test");
+        players[2].addNote("Test note", "Test",false);
         System.out.print("\n");
         printNotebook(players[2].getNotes());
         printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
 
         for (int i = 0; i < num_players; i++) {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
-            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards");
+            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",true);
         }
 
         movePlayer = new MovePlayer(num_players,players);
@@ -87,7 +87,7 @@ public class Game {
             System.out.println("Player " + (x + 1) + " is: " + players[x].getName());
 
             players[x].initNotebook(players[x].getName());
-            players[x].addNote("Player " + (x + 1), "Info");
+            players[x].addNote("Player " + (x + 1), "Info",false);
         }
 
         return players;
@@ -164,7 +164,7 @@ public class Game {
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
 
         int dice_num = roll_dice();
-        player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game");
+        player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game",true);
         int num;
         Scanner sc = new Scanner(System.in);
         int i = dice_num;
@@ -184,7 +184,7 @@ public class Game {
                 i--;
             }
             else if (num == 2)  {
-                my_hypothesis.form_hypothesis(player,player_num,Rooms.CONSERVATORY);
+                my_hypothesis.form_hypothesis(player,player_num,movePlayer.return_pos(player));
                 i--;
             }
             else if (num == 3)  {

@@ -76,6 +76,14 @@ public class MovePlayer {
         return hm;
     }
 
+    public String return_pos(Player player)    {
+        int[] coordinates = player.getPos();
+        int x = coordinates[1];
+        int y = coordinates[0];
+        Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
+        return  room.getSlot();
+    }
+
     public void move_character(Player player)  {
         Scanner scanner = new Scanner(System.in);
 
@@ -85,7 +93,7 @@ public class MovePlayer {
 
         printMap();
         Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
-        player.addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement");
+        player.addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement",true);
 
         Hashtable<String,Boolean> hm = checkMove(x,y);
         String message = "Select where you would like to move: ";
@@ -119,7 +127,7 @@ public class MovePlayer {
                     }
                 case "W":
                     if (board.canMove(x + 1, y)) {
-                        player.addNote("You moved North", "Movement");
+                        player.addNote("You moved North", "Movement",true);
                         player.setPos(x + 1, y);
                         break inputLoop;
                     } else {
@@ -130,7 +138,7 @@ public class MovePlayer {
 
                 case "S":
                     if (board.canMove(x - 1, y)) {
-                        player.addNote("You moved South", "Movement");
+                        player.addNote("You moved South", "Movement",true);
                         player.setPos(x - 1, y);
                         break inputLoop;
                     } else {
@@ -141,7 +149,7 @@ public class MovePlayer {
 
                 case "D":
                     if (board.canMove(x, y + 1)) {
-                        player.addNote("You moved East", "Movement");
+                        player.addNote("You moved East", "Movement",true);
                         player.setPos(x, y + 1);
                         break inputLoop;
                     } else {
