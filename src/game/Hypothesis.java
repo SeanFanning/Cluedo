@@ -13,7 +13,7 @@ public class Hypothesis {
         this.num_players = num_players;
     }
 
-    private Card[] rename(Player player, int player_num, String room, String rename) {
+    private Card[] build_hypothesis(Player player, String room, String rename) {
 
         List characters = java.util.Arrays.asList(Character.values());
         List weapons = java.util.Arrays.asList(Weapon.values());
@@ -57,13 +57,13 @@ public class Hypothesis {
         player.addNote("You picked the " + weapon + " weapon.", rename,true);
 
 
-        Card[] ans = {character,weapon};
+        Card[] ans = {character, weapon};
         return ans;
     }
 
     public void form_hypothesis(Player player, int player_num, String room) {
 
-        Card [] ans = rename(player,player_num,room,"Hypothesis");
+        Card [] ans = build_hypothesis(player,room,"Hypothesis");
         Card character = ans[0];
         Card weapon = ans[1];
 
@@ -76,6 +76,12 @@ public class Hypothesis {
             }
             p.addNote(player.getName() + " formulated the hypothesis that " + character + " made the murder in the "+ room + " with the " + weapon + ".", "Hypothesis",false);
             count++;
+
+            // Move the target character to the same room as the current player
+            if(p.getName().equals(character.toString())){
+                p.setPos(player.getPos()[1], player.getPos()[0]);
+                p.addNote("You have been moved for a Hypothesis to the " + room, "Hypothesis", false);
+            }
         }
 
 
@@ -131,7 +137,7 @@ public class Hypothesis {
     }
 
     public boolean accuse(Player player, int player_num, String room)  {
-        Card [] ans = rename(player,player_num,room,"Accusation");
+        Card [] ans = build_hypothesis(player,room,"Accusation");
         Card character = ans[0];
         Card weapon = ans[1];
 

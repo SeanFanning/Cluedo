@@ -94,7 +94,7 @@ public class Game {
         };
 
         char[] icons = new char[]{
-                '€', '£', '$', '%', '@', '&'
+                '1', '2', '3', '4', '5', '6'
         };
 
         for(int x=0; x<num_players; x++)    {

@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Map {
     private char[][] map = new char[][]{ //TODO: Convert this into an array of Slots
             { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
-            { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+            { 'X', ' ', ' ', ' ', ' ', ' ', 'K', ' ', ' ', 'X' },
             { 'X', 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', 'X' },
             { 'X', ' ', ' ', ' ', ' ', 'X', 'C', 'C', 'C', 'X' },
             { 'X', ' ', ' ', ' ', ' ', ' ', 'C', 'C', 'C', 'X' },
