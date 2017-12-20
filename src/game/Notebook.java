@@ -5,11 +5,8 @@ import java.util.*;
 public class Notebook {
 
     // An array list of strings will store the notes
-    // private List<String> notes = new ArrayList<String>();
     private List<Note> notes = new ArrayList<Note>();
     private String name;
-
-    // TODO: Each note should have a type so you can filter (eg. moves made etc)
 
     public Notebook(String n){
         name = n;
