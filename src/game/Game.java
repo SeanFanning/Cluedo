@@ -1,5 +1,6 @@
 package game;
 
+import board.Map;
 import java.util.*;
 
 public class Game {
@@ -9,7 +10,7 @@ public class Game {
     private static ArrayList<Character> characters;
     private static Player[] players;
     private static int num_players;
-    private static MovePlayer movePlayer;
+    private static Map map = new Map();
 
     public static void main(String[] args){
 
@@ -37,7 +38,7 @@ public class Game {
         players = initPlayers(num_players, characters);
         dealCards(players,initDeck(solution),num_players);
 
-        players[2].addNote("Test note", "Test",false);
+       /* players[2].addNote("Test note", "Test",false);
         System.out.print("\n");
         printNotebook(players[2].getNotes());
         printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
@@ -45,9 +46,8 @@ public class Game {
         for (int i = 0; i < num_players; i++) {
             System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
             players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",true);
-        }
+        }*/
 
-        movePlayer = new MovePlayer(num_players,players);
         while(true) {
             List<Player> playersInGame = new ArrayList<Player>();
             for (Player player : players)    {
@@ -73,7 +73,7 @@ public class Game {
     }
 
 
-    public static Player[] initPlayers(int num_players, ArrayList<Character> characters){
+    private static Player[] initPlayers(int num_players, ArrayList<Character> characters){
         Player[] players = new Player[num_players];
 
         int[][] startingPos = new int[][]{
@@ -103,7 +103,7 @@ public class Game {
     }
 
     // TODO: Move this to a new initialisation class
-    public static Card[] initSolution(){
+    private static Card[] initSolution(){
         Card[] solution = new Card[3];
         solution[0] = Character.getRandom();
         solution[1] = Weapon.getRandom();
@@ -113,7 +113,7 @@ public class Game {
     }
 
     // TODO: Move this to a new initialisation class
-    public static Card[] initDeck(Card[] solution) {
+    private static Card[] initDeck(Card[] solution) {
         Card[] deck = new Card[18];
         Card[] characters = Character.values();
         Card[] weapons = Weapon.values();
@@ -144,12 +144,12 @@ public class Game {
         return deck;
     }
 
-    public static int roll_dice()   {
+    private static int roll_dice()   {
         int dice_num = (int)(Math.random() * 11 + 2);
         return dice_num;
     }
 
-    public static void dealCards(Player[] player, Card[] deck, int num_players) {
+    private static void dealCards(Player[] player, Card[] deck, int num_players) {
 
         ArrayList<Card> shuffled_deck = new ArrayList<>();
         for(Card d : deck){
@@ -167,10 +167,12 @@ public class Game {
         }
     }
 
-    public static void takeTurn(Player player, int player_num)   {
+    private static void takeTurn(Player player, int player_num)   {
 
         // Testing Hypothesis
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
+        MovePlayer movePlayer = new MovePlayer(num_players,players);
+        map.printMap(players,num_players);
 
         int dice_num = roll_dice();
         player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game",true);
@@ -178,7 +180,6 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         int i = dice_num;
         while(i > 0) {
-            System.out.println(player.getName() + " (uid: " + player.getIcon() + ")");
             System.out.println("You have " + i + " turns left");
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
@@ -208,9 +209,7 @@ public class Game {
                 i--;
             }
             else    {
-                for (Note c : player.getNotes()) {
-                    System.out.println(c.getNote());
-                }
+                printNotebook(player.getNotes());
             }
         }
     }

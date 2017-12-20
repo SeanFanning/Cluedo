@@ -13,12 +13,30 @@ public class Hypothesis {
         this.num_players = num_players;
     }
 
-    public Card[] rename(Player player, int player_num, String room) {
+    private Card[] rename(Player player, int player_num, String room, String rename) {
+
+        List characters = java.util.Arrays.asList(Character.values());
+        List weapons = java.util.Arrays.asList(Weapon.values());
+
+        String ch = "";
+        int x = 1;
+        for (Object c : characters) {
+            ch = ch + x + ") " + c + " ";
+            x = x +1;
+        }
+
+        String we = "";
+        int y = 1;
+        for (Object w : weapons)    {
+            we = we + y + ") " + w + " ";
+            y = y + 1;
+        }
+
         player.addNote("You are in the " + room, "Hypothesis",true);
         Scanner sc = new Scanner(System.in);
         int number;
         do {
-            System.out.println("Which character would you like to accuse? [1:6] - \n" + java.util.Arrays.asList(Character.values()));
+            System.out.println("Which character would you like to pick? \n" + ch);
             while (!sc.hasNextInt()) {
                 System.out.println("That's not a number!");
                 sc.next(); // this is important!
@@ -26,9 +44,9 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card character = Character.values()[number - 1];
-        player.addNote("You accused " + character + ".", "Accusation",true);
+        player.addNote("You picked " + character + ".", rename,true);
         do {
-            System.out.println("Which weapon would you like to pick? [1:6] - \n" + java.util.Arrays.asList(Weapon.values()));
+            System.out.println("Which weapon would you like to pick? \n" + we);
             while (!sc.hasNextInt()) {
                 System.out.println("That's not a number!");
                 sc.next(); // this is important!
@@ -36,9 +54,20 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card weapon = Weapon.values()[number - 1];
-        player.addNote("You picked the " + weapon + " weapon.", "Hypothesis",true);
-        player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis",true);
+        player.addNote("You picked the " + weapon + " weapon.", rename,true);
 
+
+        Card[] ans = {character,weapon};
+        return ans;
+    }
+
+    public void form_hypothesis(Player player, int player_num, String room) {
+
+        Card [] ans = rename(player,player_num,room,"Hypothesis");
+        Card character = ans[0];
+        Card weapon = ans[1];
+
+        player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis",true);
         int count = 0;
         for (Player p : players)    {
             if (count == player_num)    {
@@ -48,15 +77,7 @@ public class Hypothesis {
             p.addNote(player.getName() + " formulated the hypothesis that " + character + " made the murder in the "+ room + " with the " + weapon + ".", "Hypothesis",false);
             count++;
         }
-        Card[] ans = {character,weapon};
-        return ans;
-    }
 
-    public void form_hypothesis(Player player, int player_num, String room) {
-
-        Card [] ans = rename(player,player_num,room);
-        Card character = ans[0];
-        Card weapon = ans[1];
 
         boolean sol_right = true;
         int index = player_num - 1;
@@ -96,7 +117,7 @@ public class Hypothesis {
             player.addNote("No one else has these cards", "Hypothesis",true);
         }
         else    {
-            int count = 0;
+            count = 0;
             for (Player p : players)    {
                 if (count == player_num || count == index)    {
                     count++;
@@ -110,7 +131,7 @@ public class Hypothesis {
     }
 
     public boolean accuse(Player player, int player_num, String room)  {
-        Card [] ans = rename(player,player_num,room);
+        Card [] ans = rename(player,player_num,room,"Accusation");
         Card character = ans[0];
         Card weapon = ans[1];
 

@@ -93,7 +93,7 @@ public class MovePlayer {
 
         printMap();
         Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
-        player.addNote("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot(), "Movement",true);
+        System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
 
         Hashtable<String,Boolean> hm = checkMove(x,y);
         String message = "Select where you would like to move: ";

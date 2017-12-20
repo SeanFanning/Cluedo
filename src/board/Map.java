@@ -1,8 +1,11 @@
 package board;
+import game.Player;
 
 import game.Card;
 import game.Rooms;
 import game.token.Slot;
+
+import java.util.Arrays;
 
 public class Map {
     private char[][] map = new char[][]{ //TODO: Convert this into an array of Slots
@@ -86,6 +89,25 @@ public class Map {
     //TODO: DFS Search to get distance to destination, while moving around walls etc.
     public int getDistance(int x1, int y1, int x2, int y2){
         return Math.abs(x1-x2) + Math.abs(y1-y2);
+    }
+
+    public void printMap(Player[] players, int num_players){
+
+        char[][] tmp_map = new char[map.length][];
+        for(int i=0; i<map.length; i++){
+            tmp_map[i] = map[i].clone();
+        }
+
+        for(int i=0; i<num_players; i++){
+            int x = players[i].getPos()[0];
+            int y = players[i].getPos()[1];
+
+            tmp_map[y][x] = players[i].getIcon();
+        }
+
+        for(int i=map.length-1; i>=0; i--) {
+            System.out.println(Arrays.toString(tmp_map[i]));
+        }
     }
 
 }
