@@ -42,11 +42,11 @@ public class Game {
         System.out.print("\n");
         printNotebook(players[2].getNotes());
         printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
+        */
 
-        for (int i = 0; i < num_players; i++) {
-            System.out.println("Player " + (i+1) + "'s hand is:\n" + players[i].getCards() + "\n");
-            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",true);
-        }*/
+       for (int i = 0; i < num_players; i++) {
+            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",false);
+        }
 
        boolean solRight = false;
        List<Player> playersInGame = new ArrayList<Player>();
