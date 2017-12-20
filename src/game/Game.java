@@ -48,7 +48,8 @@ public class Game {
             players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",true);
         }*/
 
-        while(true) {
+       boolean solRight = false;
+        while(!solRight) {
             List<Player> playersInGame = new ArrayList<Player>();
             for (Player player : players)    {
                 if (player.returnGame())    {
@@ -57,7 +58,10 @@ public class Game {
             }
             for (Player player : playersInGame) {
                 System.out.println(player.getName());
-                takeTurn(player, playersInGame.indexOf(player));
+                solRight = takeTurn(player, playersInGame.indexOf(player));
+                if (solRight)   {
+                    break;
+                }
                 System.out.println("\nNext players turn!\n\n");
             }
         }
@@ -167,8 +171,9 @@ public class Game {
         }
     }
 
-    private static void takeTurn(Player player, int player_num)   {
+    private static boolean takeTurn(Player player, int player_num)   {
 
+        boolean sol = false;
         // Testing Hypothesis
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
         MovePlayer movePlayer = new MovePlayer(num_players,players);
@@ -202,16 +207,21 @@ public class Game {
                 i--;
             }
             else if (num == 3)  {
-                boolean sol = my_hypothesis.accuse(player,player_num,movePlayer.return_pos(player));
+                sol = my_hypothesis.accuse(player,player_num,movePlayer.return_pos(player));
                 if (!sol)   {
                     break;
                 }
-                i--;
+                else    {
+                    System.out.println("Congratulations! Player " + player.getName() + " has won the game!");
+                    break;
+                }
             }
+
             else    {
                 printNotebook(player.getNotes());
             }
         }
+        return sol;
     }
 
 }
