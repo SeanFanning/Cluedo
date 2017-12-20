@@ -9,35 +9,12 @@ import java.util.*;
 public class MovePlayer {
 
     private static Map board = new Map();
-    private static char[][] map = board.getMap();;
     private Player[] players;
     private int num_players;
 
     public MovePlayer(int num_players, Player[] players)    {
         this.num_players = num_players;
         this.players = players;
-    }
-
-    // TODO: Tidy up the brackets
-    // TODO: Y-Axis is upsidedown
-    // Draw the map on the game screen
-    private void printMap(){
-
-        char[][] tmp_map = new char[map.length][];
-        for(int i=0; i<map.length; i++){
-            tmp_map[i] = map[i].clone();
-        }
-
-        for(int i=0; i<num_players; i++){
-            int x = players[i].getPos()[0];
-            int y = players[i].getPos()[1];
-
-            tmp_map[y][x] = players[i].getIcon();
-        }
-
-        for(int i=map.length-1; i>=0; i--) {
-            System.out.println(Arrays.toString(tmp_map[i]));
-        }
     }
 
     public Hashtable<String, Boolean> checkMove(int x, int y)
@@ -91,7 +68,7 @@ public class MovePlayer {
         int x = coordinates[1];
         int y = coordinates[0];
 
-        printMap();
+        board.printMap(players,num_players);
         Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
         System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
 
@@ -165,6 +142,6 @@ public class MovePlayer {
         }
 
         //System.out.println("Out of moves");
-        printMap();
+        board.printMap(players,num_players);
     }
 }
