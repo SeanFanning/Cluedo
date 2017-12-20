@@ -49,12 +49,16 @@ public class Game {
         }*/
 
        boolean solRight = false;
+       List<Player> playersInGame = new ArrayList<Player>();
         while(!solRight) {
-            List<Player> playersInGame = new ArrayList<Player>();
+            playersInGame.clear();
             for (Player player : players)    {
                 if (player.returnGame())    {
                     playersInGame.add(player);
                 }
+            }
+            if (playersInGame.isEmpty())    {
+                break;
             }
             for (Player player : playersInGame) {
                 System.out.println(player.getName());
