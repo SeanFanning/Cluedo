@@ -6,7 +6,7 @@ import java.util.*;
 
 
 
-public class MovePlayer {
+public class MovePlayer{
 
     private static Map board = new Map();
     private Player[] players;
