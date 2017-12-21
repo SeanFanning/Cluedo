@@ -85,8 +85,8 @@ public class Game {
         Player[] players = new Player[num_players];
 
         int[][] startingPos = new int[][]{
-                {1, 7},
-                {6, 1},
+                {3, 1}, //1, 7
+                {19, 4}, //6, 1
                 {19, 7},
                 {19, 16},
                 {15, 22},
@@ -225,6 +225,7 @@ public class Game {
                 printNotebook(player.getNotes());
             }
         }
+        System.out.println("Out of turns. " + player.getPos().toString());
         return sol;
     }
 

@@ -50,14 +50,20 @@ public class MovePlayer{
             hm.put("East [D]",false);
         }
 
+        if (board.getSlot(x, y).getSlot().equals("Tunnel")){
+            hm.put("Travel through tunnel [T]", true);
+            System.out.println("Slot: " + board.getSlot(x, y).getSlot());
+        }
+        else {
+            hm.put("Travel through tunnel [T]",false);
+        }
+
         return hm;
     }
 
     public String return_pos(Player player)    {
         int[] coordinates = player.getPos();
-        int x = coordinates[1];
-        int y = coordinates[0];
-        Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
+        Slot room = board.getSlot(player.getPos()[1], player.getPos()[0]);
         return  room.getSlot();
     }
 
@@ -69,12 +75,12 @@ public class MovePlayer{
         int y = coordinates[0];
 
         board.printMap(players,num_players);
-        Slot room = board.getSlot(player.getPos()[0], player.getPos()[1]);
+        Slot room = board.getSlot(player.getPos()[1], player.getPos()[0]);
         System.out.println("You are at " + Arrays.toString(coordinates) + " in " + room.getSlot());
 
         Hashtable<String,Boolean> hm = checkMove(x,y);
         String message = "Select where you would like to move: ";
-        String[] directions = {"West [A]","North [W]","South [S]","East [D]"};
+        String[] directions = {"West [A]","North [W]","South [S]","East [D]","Travel through tunnel [T]"};
 
         int lol = 0;
         for (String dir : directions)   {
@@ -134,6 +140,29 @@ public class MovePlayer{
                         break;
                     }
 
+                case "T":
+                    if (board.getSlot(x, y).getSlot().equals("Tunnel")) {
+                        if (board.getSlot(x - 1, y - 1).getSlot().equals("KITCHEN")) {
+                            player.addNote("You travelled through the tunnel to the Study", "Movement", true);
+                            player.setPos(3, 22);
+                            break inputLoop;
+                        } else if (board.getSlot(x + 1, y - 1).getSlot().equals("CONSERVATORY")){
+                            player.addNote("You travelled through the tunnel to the Lounge", "Movement", true);
+                            player.setPos(4, 1);
+                            break inputLoop;
+                        } else if (board.getSlot(x - 1, y - 1).getSlot().equals("STUDY")){
+                            player.addNote("You travelled through the tunnel to the Kitchen", "Movement", true);
+                            player.setPos(19, 5);
+                            break inputLoop;
+                        } else if (board.getSlot(x - 1, y + 1).getSlot().equals("LOUNGE")){
+                            player.addNote("You travelled through the tunnel to the Conservatory", "Movement", true);
+                            player.setPos(17, 22);
+                            break inputLoop;
+                        } else {
+                            System.out.println("Unexpected");
+                            break;
+                        }
+                    }
 
                 default:
                     System.out.println("Not a valid input");

@@ -93,7 +93,7 @@ public class Map {
     }
 
     public Slot getSlot(int x, int y){
-        return map_slots[y][x];
+        return map_slots[x][y];
     }
 
     public int getDistance(int x1, int y1, int x2, int y2){
