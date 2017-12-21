@@ -85,12 +85,12 @@ public class Game {
         Player[] players = new Player[num_players];
 
         int[][] startingPos = new int[][]{
-                {1, 1},
-                {3, 3},
-                {1, 3},
-                {1, 2},
-                {1, 4},
-                {3, 1}
+                {1, 7},
+                {6, 1},
+                {19, 7},
+                {19, 16},
+                {15, 22},
+                {5, 22}
         };
 
         char[] icons = new char[]{
