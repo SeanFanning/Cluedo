@@ -224,9 +224,9 @@ public class Game {
 
             else    {
                 String filter = "";
-                int check;
+                int check = 1;
                 printNotebook(player.getNotes());
-                do {
+                while (check!=0) {
                     System.out.println("Type in a keyword to filter your notebook or press \"0\" to exit:");
                     filter = sc2.nextLine();
                     printNotebook(player.filterNotes(filter));
@@ -239,7 +239,7 @@ public class Game {
                     {
                         check = 1;
                     }
-                } while (check != 0);
+                }
             }
         }
         System.out.println("Out of turns. " + player.getPos().toString());

@@ -33,13 +33,12 @@ public class Notebook {
         for(int i=0; i<notes.size(); i++){
             n = notes.get(i);
 
-            if(n.getType().equals(type)){
+            if(n.getType().toLowerCase().equals(type.toLowerCase())){
                 found.add(n);
             }
         }
 
-        if (found.isEmpty())   {
-
+        if (found.isEmpty() && !type.equals("0"))   {
             found.add(new Note("No notes found for that keyword.","Error"));
         }
 
