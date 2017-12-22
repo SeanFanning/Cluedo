@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Arrays;
 import java.util.Random;
 
-
+// enum class that represents all available weapons
 public enum Weapon implements Card{
     LEAD_PIPE,
     REVOLVER,
@@ -36,7 +36,7 @@ public enum Weapon implements Card{
         pawn.setPosition(x, y);
     }
 
-    // We dont actually draw the weapons on the map, so this is probably not necissary
+    // We dont actually draw the weapons on the map, so this is probably not necessary
     public char getIcon(){
         return pawn.getIcon();
     }

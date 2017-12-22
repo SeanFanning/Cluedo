@@ -4,8 +4,7 @@ import board.Map;
 import game.token.Slot;
 import java.util.*;
 
-
-
+// movement class
 public class MovePlayer{
 
     private static Map board = new Map();
@@ -22,6 +21,7 @@ public class MovePlayer{
 
         Hashtable<String, Boolean> hm = new Hashtable();
 
+        // creates a hashtable of player movable locations so the players choice are only limited to those options
         if (board.canMove(x, y - 1)) {
             hm.put("West [A]",true);
         }
@@ -82,19 +82,21 @@ public class MovePlayer{
         String message = "Select where you would like to move: ";
         String[] directions = {"West [A]","North [W]","South [S]","East [D]","Travel through tunnel [T]"};
 
-        int lol = 0;
+        // concatenates msg based on locations where you can move, so if you can't move East it won't display East
+        int iterate = 0;
         for (String dir : directions)   {
             if (hm.get(dir))    {
-                if (lol == 0) {
+                if (iterate == 0) {
                     message += dir;
                 }
                 else    {
                     message += ", " + dir;
                 }
-                lol = 1;
+                iterate = 1;
             }
         }
 
+        // asks players where they want to move and checks if they can move there
         inputLoop:  while(true) {
             System.out.println(message);
             String direction = scanner.nextLine();

@@ -18,6 +18,7 @@ public class Hypothesis {
         List characters = java.util.Arrays.asList(Character.values());
         List weapons = java.util.Arrays.asList(Weapon.values());
 
+        // rearranges the character list as a readable string with numbers for each character
         String ch = "";
         int x = 1;
         for (Object c : characters) {
@@ -25,6 +26,7 @@ public class Hypothesis {
             x = x +1;
         }
 
+        //rearranges the weapon list as a readable string with numbers for each weapon
         String we = "";
         int y = 1;
         for (Object w : weapons)    {
@@ -35,11 +37,12 @@ public class Hypothesis {
         player.addNote("You are in the " + room, "Hypothesis",true);
         Scanner sc = new Scanner(System.in);
         int number;
+        // only exits loop if user picks a number between 1 and 6
         do {
             System.out.println("Which character would you like to pick? \n" + ch);
             while (!sc.hasNextInt()) {
                 System.out.println("That's not a number!");
-                sc.next(); // this is important!
+                sc.next();
             }
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
@@ -49,7 +52,7 @@ public class Hypothesis {
             System.out.println("Which weapon would you like to pick? \n" + we);
             while (!sc.hasNextInt()) {
                 System.out.println("That's not a number!");
-                sc.next(); // this is important!
+                sc.next();
             }
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
@@ -71,6 +74,7 @@ public class Hypothesis {
 
         player.addNote("I formulated the Hypothesis that " + character + " made the murder in the " + room + " with the " + weapon + ".", "Hypothesis",true);
         int count = 0;
+        // adding notebook entries for other players of the hypothesis
         for (Player p : players)    {
             if (count == player_num)    {
                 count++;
@@ -87,12 +91,13 @@ public class Hypothesis {
         }
 
 
-        boolean sol_right = true;
+        boolean sol_right = true; // variable that returns true if the player has guessed the solution right
         int index = player_num - 1;
         if (index == -1)    {
             index = num_players - 1;
         }
 
+        // goes through every players hand and checks if they have a card that matches with the hypothesis
         for (Player pl : players) {
             for (Card c : players[index].getCards()) {
                 if (c.equals(weapon)) {
@@ -122,7 +127,7 @@ public class Hypothesis {
             }
         }
         if (sol_right) {
-            player.addNote("No one else has these cards", "Hypothesis",true);
+            player.addNote("No one else has these cards!", "Hypothesis",true);
         }
         else    {
             count = 0;
@@ -143,6 +148,7 @@ public class Hypothesis {
         Card character = ans[0];
         Card weapon = ans[1];
 
+        // similar to the hypothesis method, however does not add notebook entries
         boolean sol_right = true;
         int index = player_num - 1;
         if (index == -1)    {
@@ -165,7 +171,7 @@ public class Hypothesis {
             }
             if (!sol_right) {
                 System.out.println("Your solution is wrong. You are the weakest link, goodbye.");
-                player.rm();
+                player.rm(); // removes player from game
                 break;
             }
             index--;

@@ -3,15 +3,17 @@ package game;
 import board.Map;
 import java.util.*;
 
+
+//This is the main class where initialisation takes play and the game runs
 public class Game {
 
+    // Global variables for our class
     private static ArrayList<Character> characters;
     private static Player[] players;
     private static int num_players;
     private static Map map = new Map();
 
     public static void main(String[] args){
-
         System.out.println("Welcome to Cludeo! How many people will be playing? [3-6]");
         Scanner sc = new Scanner(System.in);
         num_players = 0;
@@ -28,13 +30,13 @@ public class Game {
             check++;
         } while (num_players <= 2 || num_players > 6);
 
-        characters = Character.shuffleCharacters(num_players);
+        characters = Character.shuffleCharacters(num_players); //giving a character to each player randomly given the number of players playing
 
         Card[] solution;
-        solution = initSolution();
+        solution = initSolution(); //initialises solution
 
-        players = initPlayers(num_players, characters);
-        dealCards(players,initDeck(solution),num_players);
+        players = initPlayers(num_players, characters); // sets up each player
+        dealCards(players,initDeck(solution),num_players); // deals cards to each player
 
        /* players[2].addNote("Test note", "Test",false);
         System.out.print("\n");
@@ -42,15 +44,17 @@ public class Game {
         printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
         */
 
+       // adds players hand to their notebook
        for (int i = 0; i < num_players; i++) {
             players[i].addNote("Your hand is: " + players[i].getCards(), "Hand",false);
         }
 
-       boolean solRight = false;
-       List<Player> playersInGame = new ArrayList<Player>();
+        // takes players turns until solution is found or each player gets solution wrong
+        boolean solRight = false;
+        List<Player> playersInGame = new ArrayList<Player>();
         while(!solRight) {
             playersInGame.clear();
-            for (Player player : players)    {
+            for (Player player : players)    { // array that keeps track of how many players are still in game
                 if (player.returnGame())    {
                     playersInGame.add(player);
                 }
@@ -58,7 +62,7 @@ public class Game {
             if (playersInGame.isEmpty())    {
                 break;
             }
-            for (Player player : playersInGame) {
+            for (Player player : playersInGame) { // takes players turn
                 System.out.println(player.getName());
                 solRight = takeTurn(player, playersInGame.indexOf(player));
                 if (solRight)   {
@@ -79,6 +83,7 @@ public class Game {
     }
 
 
+    // initialises players
     private static Player[] initPlayers(int num_players, ArrayList<Character> characters){
         Player[] players = new Player[num_players];
 
@@ -91,7 +96,7 @@ public class Game {
                 {5, 22}
         };
 
-        char[] icons = new char[]{
+        char[] icons = new char[]{ // player symbols
                 '1', '2', '3', '4', '5', '6'
         };
 
@@ -120,13 +125,13 @@ public class Game {
 
     // TODO: Move this to a new initialisation class
     private static Card[] initDeck(Card[] solution) {
-        Card[] deck = new Card[18];
+        Card[] deck = new Card[18]; // 18 is the amount of total cards in cluedo - 3 (that are part of the solution)
         Card[] characters = Character.values();
         Card[] weapons = Weapon.values();
         Card[] rooms = Rooms.values();
         int i = 0;
         for (Card c : characters) {
-            if (c.equals(solution[0]))    {
+            if (c.equals(solution[0]))    { // don't add the solution to the deck
                 continue;
             }
             deck[i] = c;
@@ -175,10 +180,10 @@ public class Game {
 
     private static boolean takeTurn(Player player, int player_num)   {
 
-        boolean sol = false;
-        Hypothesis my_hypothesis = new Hypothesis(players,num_players);
-        MovePlayer movePlayer = new MovePlayer(num_players,players);
-        map.printMap(players,num_players);
+        boolean sol = false; // true if player guesses solution correctly
+        Hypothesis my_hypothesis = new Hypothesis(players,num_players); // for hypothesis
+        MovePlayer movePlayer = new MovePlayer(num_players,players); // for moving
+        map.printMap(players,num_players); // prints cluedo map
         int dice_num = roll_dice();
         player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game",true);
 
@@ -188,6 +193,7 @@ public class Game {
 
         while(dice_num > 0) {
             System.out.println("You have " + dice_num + " turns left");
+            // get players input on which option to make, limiting their input to choices 1 - 4
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
                 while (!sc.hasNextInt()) {
@@ -196,20 +202,23 @@ public class Game {
                 }
                 num = sc.nextInt();
             } while (num <= 0 || num > 5);
+            // move
             if (num == 1)   {
                 movePlayer.move_character(player);
                 dice_num--;
             }
+            // form hypothesis
             else if (num == 2)  {
-                if (movePlayer.return_pos(player).equals("Hallway"))    {
+                if (movePlayer.return_pos(player).equals("Hallway") || movePlayer.return_pos(player).equals("Tunnel"))    {
                     System.out.println("You must be in a room to form a hypothesis");
                     continue;
                 }
                 my_hypothesis.form_hypothesis(player,player_num,movePlayer.return_pos(player));
                 break;
             }
+            // accuse
             else if (num == 3)  {
-                if (movePlayer.return_pos(player).equals("Hallway"))    {
+                if (movePlayer.return_pos(player).equals("Hallway") || movePlayer.return_pos(player).equals("Tunnel"))    {
                     System.out.println("You must be in a room to form a hypothesis");
                     continue;
                 }
@@ -222,8 +231,8 @@ public class Game {
                     break;
                 }
             }
-
-            else    {
+            // view notebook
+            else if (num == 4)  {
                 String filter = "";
                 int check = 1;
                 printNotebook(player.getNotes());
@@ -240,6 +249,9 @@ public class Game {
                         check = 1;
                     }
                 }
+            }
+            else    {
+                System.out.println("Error in input.");
             }
         }
         //System.out.println("Out of turns. " + player.getPos().toString());

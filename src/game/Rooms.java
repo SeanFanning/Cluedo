@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+// enum class that represents all available rooms
 public enum Rooms implements Card{
     KITCHEN,
     BALLROOM,
