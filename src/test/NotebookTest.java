@@ -17,7 +17,7 @@ public class NotebookTest {
     }
 
     @Test
-    public void testNotebook() {
+    public void test_Notebook() {
         // Test basic notes
         assertEquals("PROFESSOR_PLUM\'s Notebook: ", notebook.getNotes().get(0).getNote());
         assertNotEquals("REVEREND\'s Notebook: ", notebook.getNotes().get(0).getNote());
@@ -26,13 +26,13 @@ public class NotebookTest {
     }
 
     @Test
-    public void testNoteTypes(){
+    public void test_NoteTypes(){
         // Test note types
         assertEquals("Test", notebook.getNotes().get(1).getType());
     }
 
     @Test
-    public void testFilteredNotes(){
+    public void test_FilteredNotes(){
         // Test filtering notes
         notebook.add_note("Another test note in notebook", "Test",false);
         notebook.add_note("This note has a different type", "Other",false);
