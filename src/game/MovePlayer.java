@@ -61,6 +61,7 @@ public class MovePlayer{
         return hm;
     }
 
+    // Returns the current slot the player is on
     public String return_pos(Player player)    {
         int[] coordinates = player.getPos();
         Slot room = board.getSlot(player.getPos()[1], player.getPos()[0]);
@@ -142,7 +143,7 @@ public class MovePlayer{
                         break;
                     }
 
-                case "T":
+                case "T": // Move the player through the tunnel
                     if (board.getSlot(x, y).getSlot().equals("Tunnel")) {
                         if (board.getSlot(x - 1, y - 1).getSlot().equals("KITCHEN")) {
                             player.addNote("You travelled through the tunnel to the Study", "Movement", true);
@@ -172,7 +173,6 @@ public class MovePlayer{
             }
         }
 
-        //System.out.println("Out of moves");
         board.printMap(players,num_players);
     }
 }

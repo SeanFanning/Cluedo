@@ -26,6 +26,7 @@ public class Notebook {
         return notes;
     }
 
+    // Filters the notes by type, and only returns a list of those notes
     public List<Note> filterNotes(String type){
         List<Note> found = new ArrayList<Note>();
         Note n;
