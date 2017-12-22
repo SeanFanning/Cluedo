@@ -38,6 +38,11 @@ public class Notebook {
             }
         }
 
+        if (found.isEmpty())   {
+
+            found.add(new Note("No notes found for that keyword.","Error"));
+        }
+
         return found;
     }
 }

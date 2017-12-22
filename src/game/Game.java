@@ -45,7 +45,7 @@ public class Game {
         */
 
        for (int i = 0; i < num_players; i++) {
-            players[i].addNote("Your hand is: " + players[i].getCards(), "Cards",false);
+            players[i].addNote("Your hand is: " + players[i].getCards(), "Hand",false);
         }
 
        boolean solRight = false;
@@ -187,6 +187,7 @@ public class Game {
         player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game",true);
         int num;
         Scanner sc = new Scanner(System.in);
+        Scanner sc2 = new Scanner(System.in);
         int i = dice_num;
         while(i > 0) {
             System.out.println("You have " + i + " turns left");
@@ -222,7 +223,23 @@ public class Game {
             }
 
             else    {
+                String filter = "";
+                int check;
                 printNotebook(player.getNotes());
+                do {
+                    System.out.println("Type in a keyword to filter your notebook or press \"0\" to exit:");
+                    filter = sc2.nextLine();
+                    printNotebook(player.filterNotes(filter));
+                    try
+                    {
+                        check = Integer.parseInt(filter);
+
+                    }
+                    catch (NumberFormatException ex)
+                    {
+                        check = 1;
+                    }
+                } while (check != 0);
             }
         }
         System.out.println("Out of turns. " + player.getPos().toString());
