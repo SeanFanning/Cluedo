@@ -212,6 +212,10 @@ public class Game {
                 i--;
             }
             else if (num == 3)  {
+                if (movePlayer.return_pos(player).equals("Hallway"))    {
+                    System.out.println("You must be in a room to form a hypothesis");
+                    continue;
+                }
                 sol = my_hypothesis.accuse(player,player_num,movePlayer.return_pos(player));
                 if (!sol)   {
                     break;
