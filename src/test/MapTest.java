@@ -1,5 +1,6 @@
 package test;
 
+import game.token.Slot;
 import org.junit.Test;
 import org.junit.Before;
 import board.Map;
@@ -40,14 +41,37 @@ public class MapTest {
     public void test_canMove(){
         // Test moving in a room
         boolean a = board.canMove(1,1);
-        assertEquals(a, true);
+        assertEquals(true, a);
 
         // Test moving in a hallway
         boolean b = board.canMove(2, 7);
-        assertEquals(b, true);
+        assertEquals(true, b);
 
         // Test moving into a wall
         boolean c = board.canMove(0, 7);
-        assertEquals(c, false);
+        assertEquals(false, c);
+    }
+
+    @Test
+    public void test_Slots(){ //Test if the correct board has been loaded, and the slots are correct
+        //Test Hallway
+        Slot s1 = board.getSlot(1, 7);
+        assertEquals("Hallway", s1.getSlot());
+
+        //Test Wall
+        Slot s2 = board.getSlot(0, 0);
+        assertEquals("Wall", s2.getSlot());
+
+        //Test Rooms
+        Slot s3 = board.getSlot(2, 2);
+        assertEquals("LOUNGE", s3.getSlot());
+        Slot s4 = board.getSlot(2, 21);
+        assertEquals("STUDY", s4.getSlot());
+        Slot s5 = board.getSlot(12, 21);
+        assertEquals("BILLIARD_ROOM", s5.getSlot());
+
+        //Test Tunnel
+        Slot s6 = board.getSlot(3, 22);
+        assertEquals("Tunnel", s6.getSlot());
     }
 }
