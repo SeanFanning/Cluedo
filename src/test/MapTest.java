@@ -38,7 +38,16 @@ public class MapTest {
 
     @Test
     public void test_canMove(){
+        // Test moving in a room
         boolean a = board.canMove(1,1);
         assertEquals(a, true);
+
+        // Test moving in a hallway
+        boolean b = board.canMove(2, 7);
+        assertEquals(b, true);
+
+        // Test moving into a wall
+        boolean c = board.canMove(0, 7);
+        assertEquals(c, false);
     }
 }
