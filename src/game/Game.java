@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Game {
 
-    // TODO: Make this less of a mess
-
     private static ArrayList<Character> characters;
     private static Player[] players;
     private static int num_players;
@@ -178,19 +176,18 @@ public class Game {
     private static boolean takeTurn(Player player, int player_num)   {
 
         boolean sol = false;
-        // Testing Hypothesis
         Hypothesis my_hypothesis = new Hypothesis(players,num_players);
         MovePlayer movePlayer = new MovePlayer(num_players,players);
         map.printMap(players,num_players);
-
         int dice_num = roll_dice();
         player.addNote("Player " + player.getName() + " (" + player.getIcon() + ") rolls a " + dice_num + "!", "Game",true);
+
         int num;
         Scanner sc = new Scanner(System.in);
         Scanner sc2 = new Scanner(System.in);
-        int i = dice_num;
-        while(i > 0) {
-            System.out.println("You have " + i + " turns left");
+
+        while(dice_num > 0) {
+            System.out.println("You have " + dice_num + " turns left");
             do {
                 System.out.println("Please choose an option:\n1: Move\n2: Form a hypothesis\n3: Make an accusation\n4: View Notebook");
                 while (!sc.hasNextInt()) {
@@ -201,7 +198,7 @@ public class Game {
             } while (num <= 0 || num > 5);
             if (num == 1)   {
                 movePlayer.move_character(player);
-                i--;
+                dice_num--;
             }
             else if (num == 2)  {
                 if (movePlayer.return_pos(player).equals("Hallway"))    {
@@ -209,7 +206,7 @@ public class Game {
                     continue;
                 }
                 my_hypothesis.form_hypothesis(player,player_num,movePlayer.return_pos(player));
-                i--;
+                break;
             }
             else if (num == 3)  {
                 if (movePlayer.return_pos(player).equals("Hallway"))    {
@@ -231,13 +228,12 @@ public class Game {
                 int check = 1;
                 printNotebook(player.getNotes());
                 while (check!=0) {
-                    System.out.println("Type in a keyword to filter your notebook or press \"0\" to exit:");
+                    System.out.println("Type in a keyword to filter your notebook (such as \"Game\") or press \"0\" to exit:");
                     filter = sc2.nextLine();
                     printNotebook(player.filterNotes(filter));
                     try
                     {
                         check = Integer.parseInt(filter);
-
                     }
                     catch (NumberFormatException ex)
                     {
@@ -246,7 +242,7 @@ public class Game {
                 }
             }
         }
-        System.out.println("Out of turns. " + player.getPos().toString());
+        //System.out.println("Out of turns. " + player.getPos().toString());
         return sol;
     }
 

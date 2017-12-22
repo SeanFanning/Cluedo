@@ -13,7 +13,7 @@ public class Hypothesis {
         this.num_players = num_players;
     }
 
-    private Card[] build_hypothesis(Player player, String room, String type) {
+    private Card[] build_hypothesis(Player player, String room) {
 
         List characters = java.util.Arrays.asList(Character.values());
         List weapons = java.util.Arrays.asList(Weapon.values());
@@ -44,7 +44,7 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card character = Character.values()[number - 1];
-        player.addNote("You picked " + character + ".", type,true);
+        System.out.println("You picked " + character + ".");
         do {
             System.out.println("Which weapon would you like to pick? \n" + we);
             while (!sc.hasNextInt()) {
@@ -54,7 +54,7 @@ public class Hypothesis {
             number = sc.nextInt();
         } while (number <= 0 || number > 6);
         Card weapon = Weapon.values()[number - 1];
-        player.addNote("You picked the " + weapon + " weapon.", type,true);
+        System.out.println("You picked the " + weapon + " weapon.");
 
         Weapon.valueOf(weapon.toString()).setPos(player.getPos()[1], player.getPos()[0]);
         player.addNote(weapon.toString() + " has been moved to [" + Weapon.valueOf(weapon.toString()).getPos()[1] + ", " + Weapon.valueOf(weapon.toString()).getPos()[0] + "]", "Hypothesis", true);
@@ -65,7 +65,7 @@ public class Hypothesis {
 
     public void form_hypothesis(Player player, int player_num, String room) {
 
-        Card [] ans = build_hypothesis(player, room,"Hypothesis");
+        Card [] ans = build_hypothesis(player, room);
         Card character = ans[0];
         Card weapon = ans[1];
 
@@ -139,7 +139,7 @@ public class Hypothesis {
     }
 
     public boolean accuse(Player player, int player_num, String room)  {
-        Card [] ans = build_hypothesis(player,room,"Accusation");
+        Card [] ans = build_hypothesis(player,room);
         Card character = ans[0];
         Card weapon = ans[1];
 
