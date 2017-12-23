@@ -8,7 +8,6 @@ import java.util.*;
 public class Game {
 
     // Global variables for our class
-    private static ArrayList<Character> characters;
     private static Player[] players;
     private static int num_players;
     private static Map map = new Map();
@@ -32,7 +31,7 @@ public class Game {
 
 
         // below is initialisation of game
-        characters = Character.shuffleCharacters(num_players); //giving a character to each player randomly given the number of players playing
+        ArrayList<Character> characters = Character.shuffleCharacters(num_players); //giving a character to each player randomly given the number of players playing
         Card [] solution = initSolution(); //initialises solution
         players = initPlayers(num_players, characters); // sets up each player
         dealCards(players,initDeck(solution),num_players); // deals cards to each player
@@ -105,7 +104,7 @@ public class Game {
         return players;
     }
 
-    // TODO: Move this to a new initialisation class
+    // initialises solution
     public static Card[] initSolution(){
         Card[] solution = new Card[3];
         solution[0] = Character.getRandom();
@@ -115,7 +114,7 @@ public class Game {
         return solution;
     }
 
-    // TODO: Move this to a new initialisation class
+    // initailises deck
     public static Card[] initDeck(Card[] solution) {
         Card[] deck = new Card[18]; // 18 is the amount of total cards in cluedo - 3 (that are part of the solution)
         Card[] characters = Character.values();
@@ -245,7 +244,6 @@ public class Game {
                 System.out.println("Error in input.");
             }
         }
-        //System.out.println("Out of turns. " + player.getPos().toString());
         return sol;
     }
 

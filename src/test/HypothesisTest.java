@@ -11,15 +11,14 @@ import java.util.ArrayList;
 
 public class HypothesisTest {
 
-    private static ArrayList<Character> characters;
     private static Player[] players;
-    Hypothesis hyp_test;
-    Card [] solution;
-    private int num_players = 6;
+    private Hypothesis hyp_test;
+    private Card [] solution;
 
     @Before
     public void setup() {
-        characters = Character.shuffleCharacters(num_players);
+        int num_players = 6;
+        ArrayList<Character> characters = Character.shuffleCharacters(num_players);
         players = Game.initPlayers(6,characters);
         solution = Game.initSolution();
         hyp_test = new Hypothesis(players,num_players);
