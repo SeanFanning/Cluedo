@@ -30,20 +30,12 @@ public class Game {
             check++;
         } while (num_players <= 2 || num_players > 6);
 
+
+        // below is initialisation of game
         characters = Character.shuffleCharacters(num_players); //giving a character to each player randomly given the number of players playing
-
-        Card[] solution;
-        solution = initSolution(); //initialises solution
-
+        Card [] solution = initSolution(); //initialises solution
         players = initPlayers(num_players, characters); // sets up each player
         dealCards(players,initDeck(solution),num_players); // deals cards to each player
-
-       /* players[2].addNote("Test note", "Test",false);
-        System.out.print("\n");
-        printNotebook(players[2].getNotes());
-        printNotebook(players[2].filterNotes("Info")); //Test filtering the notebook for Info notes
-        */
-
        // adds players hand to their notebook
        for (int i = 0; i < num_players; i++) {
             players[i].addNote("Your hand is: " + players[i].getCards(), "Hand",false);
@@ -74,7 +66,7 @@ public class Game {
 
     }
 
-    private static void printNotebook(List<Note> notes){
+    public static void printNotebook(List<Note> notes){
         System.out.println("Notebook: ");
         for(int i=0; i<notes.size(); i++){
             System.out.println(notes.get(i).getType() + ": " + notes.get(i).getNote());
@@ -84,7 +76,7 @@ public class Game {
 
 
     // initialises players
-    private static Player[] initPlayers(int num_players, ArrayList<Character> characters){
+    public static Player[] initPlayers(int num_players, ArrayList<Character> characters){
         Player[] players = new Player[num_players];
 
         int[][] startingPos = new int[][]{
@@ -114,17 +106,17 @@ public class Game {
     }
 
     // TODO: Move this to a new initialisation class
-    private static Card[] initSolution(){
+    public static Card[] initSolution(){
         Card[] solution = new Card[3];
         solution[0] = Character.getRandom();
         solution[1] = Weapon.getRandom();
         solution[2] = Rooms.getRandom();
-        System.out.println("Solution is:\nCharacter: " + solution[0] + " Weapon: " + solution[1] + " Room: " + solution[2] + "\n");
+        //System.out.println("Solution is:\nCharacter: " + solution[0] + " Weapon: " + solution[1] + " Room: " + solution[2] + "\n");
         return solution;
     }
 
     // TODO: Move this to a new initialisation class
-    private static Card[] initDeck(Card[] solution) {
+    public static Card[] initDeck(Card[] solution) {
         Card[] deck = new Card[18]; // 18 is the amount of total cards in cluedo - 3 (that are part of the solution)
         Card[] characters = Character.values();
         Card[] weapons = Weapon.values();
@@ -160,7 +152,7 @@ public class Game {
         return dice_num;
     }
 
-    private static void dealCards(Player[] player, Card[] deck, int num_players) {
+    public static void dealCards(Player[] player, Card[] deck, int num_players) {
 
         ArrayList<Card> shuffled_deck = new ArrayList<>();
         for(Card d : deck){

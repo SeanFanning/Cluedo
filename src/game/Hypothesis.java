@@ -66,8 +66,9 @@ public class Hypothesis {
         return ans;
     }
 
-    public void form_hypothesis(Player player, int player_num, String room) {
+    public boolean form_hypothesis(Player player, int player_num, String room) {
 
+        // this is the the user input
         Card [] ans = build_hypothesis(player, room);
         Card character = ans[0];
         Card weapon = ans[1];
@@ -140,7 +141,7 @@ public class Hypothesis {
                 count++;
             }
         }
-
+        return sol_right;
     }
 
     public boolean accuse(Player player, int player_num, String room)  {
