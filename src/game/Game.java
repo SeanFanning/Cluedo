@@ -201,8 +201,7 @@ public class Game {
             }
             // form hypothesis
             else if (num == 2)  {
-                if (movePlayer.return_pos(player).equals("Hallway") || movePlayer.return_pos(player).equals("Tunnel"))    {
-                    System.out.println("You must be in a room to form a hypothesis");
+                if (!my_hypothesis.check_player_room(movePlayer.return_pos(player)))    {
                     continue;
                 }
                 my_hypothesis.form_hypothesis(player,player_num,movePlayer.return_pos(player));
@@ -210,8 +209,7 @@ public class Game {
             }
             // accuse
             else if (num == 3)  {
-                if (movePlayer.return_pos(player).equals("Hallway") || movePlayer.return_pos(player).equals("Tunnel"))    {
-                    System.out.println("You must be in a room to form a hypothesis");
+                if (!my_hypothesis.check_player_room(movePlayer.return_pos(player)))    {
                     continue;
                 }
                 sol = my_hypothesis.accuse(player,player_num,movePlayer.return_pos(player));
@@ -242,6 +240,7 @@ public class Game {
                     }
                 }
             }
+            // error check
             else    {
                 System.out.println("Error in input.");
             }

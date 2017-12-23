@@ -66,6 +66,14 @@ public class Hypothesis {
         return ans;
     }
 
+    public boolean check_player_room(String room)   {
+        if (room.equals("Hallway") || room.equals("Tunnel"))    {
+            System.out.println("You must be in a room to form a hypothesis");
+            return false;
+        }
+        return true;
+    }
+
     public boolean form_hypothesis(Player player, int player_num, String room) {
 
         // this is the the user input

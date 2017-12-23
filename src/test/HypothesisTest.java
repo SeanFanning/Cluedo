@@ -1,7 +1,6 @@
 package test;
 
-import game.Game;
-import game.Card;
+import game.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.io.*;
@@ -25,6 +24,15 @@ public class HypothesisTest {
         solution = Game.initSolution();
         hyp_test = new Hypothesis(players,num_players);
         Game.dealCards(players,Game.initDeck(solution),num_players);
+    }
+
+    @Test
+    public void test_check_room()   {
+        assertEquals(false,hyp_test.check_player_room("Hallway"));
+        assertEquals(false,hyp_test.check_player_room("Tunnel"));
+        for (game.Rooms room : game.Rooms.values()) {
+            assertEquals(true,hyp_test.check_player_room(room.toString()));
+        }
     }
 
     @Test
